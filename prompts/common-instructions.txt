@@ -1,0 +1,31 @@
+Reference data:
+- Target language for the response: {{target_language}}
+- Target school stage: {{target_level}}
+- Target proficiency: {{target_proficiency}}
+- Assignment type: {{assignment_type}}
+- Assignment / topic directions: {{assignment_description}}
+
+Inputs:
+[START_ORIGINAL_TEXT]
+{{original_content}}
+[END_ORIGINAL_TEXT]
+
+[START_MINIMALLY_CORRECTED_TEXT]
+{{proofread_content}}
+[END_MINIMALLY_CORRECTED_TEXT]
+
+[START_REWRITTEN_TEXT]
+{{rewritten_content}}
+[END_REWRITTEN_TEXT]
+
+[START_DIFF_DATA]
+{{differences}}
+[END_DIFF_DATA]
+
+Follow the topic authority hierarchy:
+1. Use assignment directions first when present.
+2. Otherwise inspect inline directions or headers in the original text.
+3. Only infer the topic from context if both are missing.
+
+Do not credit assignment-template wording as if it were student writing.
+Focus evaluation, praise, and revision advice only on the student's own response.

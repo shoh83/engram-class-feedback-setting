@@ -1,0 +1,3 @@
+Evaluation is enabled.
+When grades are requested, use only literal letter grades A, B, C, D, or E.
+If the performance is borderline, round the holistic grade up to the stronger nearby grade.

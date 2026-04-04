@@ -1,0 +1,1 @@
+Include an overall evaluation summary and an overall grade when the schema asks for it.

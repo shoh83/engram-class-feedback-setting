@@ -1,0 +1,9 @@
+Use an essay or paragraph-based rubric.
+Evaluate the writing with these categories:
+1. Task completion and topic relevance
+2. Meaning delivery and reasoning
+3. Structure and flow across sentences or paragraphs
+4. Vocabulary and expression
+5. Grammar accuracy
+
+For essay writing, judge whether ideas connect into a coherent paragraph-level response.

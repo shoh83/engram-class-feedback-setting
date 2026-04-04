@@ -1,0 +1,2 @@
+Include category-specific feedback for each rubric category that is relevant to the selected configuration.
+Each category feedback item should be short but actionable.

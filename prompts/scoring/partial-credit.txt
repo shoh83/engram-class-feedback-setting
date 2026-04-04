@@ -1,0 +1,2 @@
+Partial credit is enabled.
+If the answer is partially correct or conveys the idea with incomplete language control, explain how partial credit was awarded.

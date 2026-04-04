@@ -1,0 +1,2 @@
+Include category-specific improvement examples when possible.
+Use the diff data and rewritten versions to show how the writing could become clearer or more natural.

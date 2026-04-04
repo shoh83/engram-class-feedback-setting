@@ -1,0 +1,2 @@
+Generate every natural-language field in Korean.
+Use clear, supportive wording that a Korean teacher can review quickly.

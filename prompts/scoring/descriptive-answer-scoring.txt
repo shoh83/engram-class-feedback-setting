@@ -1,0 +1,3 @@
+Descriptive-answer scoring is enabled.
+Provide a scoring result only because the assignment type is descriptive answer.
+Return a total score, a max score, and a short score breakdown aligned with content match and language control.

@@ -1,0 +1,15 @@
+Return only JSON that matches the provided schema.
+Populate fields conditionally:
+- If scoring is disabled, set scoring.enabled to false and keep scoring arrays empty.
+- If evaluation is disabled, set evaluation.enabled to false and keep its text and arrays empty.
+- If feedback is disabled, set feedback.enabled to false and keep its text and arrays empty.
+- If strengths are disabled, set strengths.enabled to false and strengths.items to an empty array.
+- If areas to improve are disabled, set areasToImprove.enabled to false and areasToImprove.items to an empty array.
+- improvements.enabled should stay true because diff-based revision notes are always required in this demo.
+
+Respect these settings:
+- scoring enabled: {{scoring_enabled}}
+- partial credit enabled: {{partial_credit_enabled}}
+
+Set meta.generatedAt to the current ISO timestamp.
+Set meta.promptFiles to the list of prompt files used for this request.
