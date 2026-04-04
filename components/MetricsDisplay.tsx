@@ -7,6 +7,8 @@ export function MetricsDisplay({ metrics }: { metrics: ResponseMetrics | null })
     return <div className="muted-banner">Generate feedback to see processing time and token metrics.</div>;
   }
 
+  const processingTimeSeconds = (metrics.processingTimeMs / 1000).toFixed(2);
+
   return (
     <div className="stack">
       {metrics.usedMock ? (
@@ -17,7 +19,7 @@ export function MetricsDisplay({ metrics }: { metrics: ResponseMetrics | null })
       <div className="metric-row">
         <div className="metric-card">
           <div className="metric-label">Processing time</div>
-          <div className="metric-value">{metrics.processingTimeMs} ms</div>
+          <div className="metric-value">{processingTimeSeconds} s</div>
         </div>
         <div className="metric-card">
           <div className="metric-label">Input tokens</div>
