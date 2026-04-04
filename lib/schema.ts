@@ -25,17 +25,16 @@ export const feedbackResponseSchema = z.object({
   }),
   scoring: z.object({
     enabled: z.boolean(),
-    totalScore: z.number().nullable(),
-    maxScore: z.number().nullable(),
+    correctAnswers: z.number().nullable(),
+    totalQuestions: z.number().nullable(),
     partialCreditAllowed: z.boolean(),
     scoreBreakdown: z.array(
       z.object({
-        label: z.string(),
+        questionNumber: z.number(),
         score: z.number(),
         rationale: z.string()
       })
-    ),
-    notes: z.array(z.string())
+    )
   }),
   evaluation: z.object({
     enabled: z.boolean(),
@@ -122,8 +121,8 @@ export const feedbackResponseJsonSchema = {
         additionalProperties: false,
         properties: {
           enabled: { type: "boolean" },
-          totalScore: { type: ["number", "null"] },
-          maxScore: { type: ["number", "null"] },
+          correctAnswers: { type: ["number", "null"] },
+          totalQuestions: { type: ["number", "null"] },
           partialCreditAllowed: { type: "boolean" },
           scoreBreakdown: {
             type: "array",
@@ -131,19 +130,15 @@ export const feedbackResponseJsonSchema = {
               type: "object",
               additionalProperties: false,
               properties: {
-                label: { type: "string" },
+                questionNumber: { type: "number" },
                 score: { type: "number" },
                 rationale: { type: "string" }
               },
-              required: ["label", "score", "rationale"]
+              required: ["questionNumber", "score", "rationale"]
             }
-          },
-          notes: {
-            type: "array",
-            items: { type: "string" }
           }
         },
-        required: ["enabled", "totalScore", "maxScore", "partialCreditAllowed", "scoreBreakdown", "notes"]
+        required: ["enabled", "correctAnswers", "totalQuestions", "partialCreditAllowed", "scoreBreakdown"]
       },
       evaluation: {
         type: "object",

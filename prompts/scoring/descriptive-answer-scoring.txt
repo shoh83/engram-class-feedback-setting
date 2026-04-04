@@ -1,3 +1,10 @@
 Descriptive-answer scoring is enabled.
 Provide a scoring result only because the assignment type is descriptive answer.
-Return a total score, a max score, and a short score breakdown aligned with content match and language control.
+Base the score on correct answers over the total number of questions.
+Return `correctAnswers`, `totalQuestions`, and a score breakdown with one item per question.
+Do not combine multiple questions into one breakdown item.
+Each breakdown item must include only:
+- `questionNumber`
+- `score`
+- `rationale`
+Each rationale must explain that specific question only.

@@ -64,23 +64,38 @@ export function OutputCards({ result, onChange }: OutputCardsProps) {
           <h3>Scoring</h3>
           <div className="card-list">
             <EditableText
-              value={`Total Score: ${result.scoring.totalScore ?? ""} / ${result.scoring.maxScore ?? ""}`}
+              value={`Correct Answers: ${result.scoring.correctAnswers ?? ""} / ${result.scoring.totalQuestions ?? ""}`}
               onChange={(value) => {
                 const match = value.match(/(\d+)\s*\/\s*(\d+)/);
                 onChange({
                   ...result,
                   scoring: {
                     ...result.scoring,
-                    totalScore: match ? Number(match[1]) : result.scoring.totalScore,
-                    maxScore: match ? Number(match[2]) : result.scoring.maxScore
+                    correctAnswers: match ? Number(match[1]) : result.scoring.correctAnswers,
+                    totalQuestions: match ? Number(match[2]) : result.scoring.totalQuestions
                   }
                 });
               }}
               minHeight={56}
             />
             {result.scoring.scoreBreakdown.map((item, index) => (
-              <div key={`${item.label}-${index}`} className="result-card">
-                <h4>{item.label}</h4>
+              <div key={`${item.questionNumber}-${index}`} className="result-card">
+                <h4>{item.questionNumber}번</h4>
+                <EditableText
+                  value={String(item.questionNumber)}
+                  onChange={(value) => {
+                    const next = [...result.scoring.scoreBreakdown];
+                    next[index] = { ...item, questionNumber: Number(value) || item.questionNumber };
+                    onChange({
+                      ...result,
+                      scoring: {
+                        ...result.scoring,
+                        scoreBreakdown: next
+                      }
+                    });
+                  }}
+                  minHeight={56}
+                />
                 <EditableText
                   value={String(item.score)}
                   onChange={(value) => {
@@ -111,23 +126,6 @@ export function OutputCards({ result, onChange }: OutputCardsProps) {
                   }}
                 />
               </div>
-            ))}
-            {result.scoring.notes.map((note, index) => (
-              <EditableText
-                key={`scoring-note-${index}`}
-                value={note}
-                onChange={(value) => {
-                  const next = [...result.scoring.notes];
-                  next[index] = value;
-                  onChange({
-                    ...result,
-                    scoring: {
-                      ...result.scoring,
-                      notes: next
-                    }
-                  });
-                }}
-              />
             ))}
           </div>
         </div>

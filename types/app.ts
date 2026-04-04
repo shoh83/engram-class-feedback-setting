@@ -84,18 +84,17 @@ export interface OutputMeta {
 }
 
 export interface ScoreBreakdownItem {
-  label: string;
+  questionNumber: number;
   score: number;
   rationale: string;
 }
 
 export interface ScoringResult {
   enabled: boolean;
-  totalScore: number | null;
-  maxScore: number | null;
+  correctAnswers: number | null;
+  totalQuestions: number | null;
   partialCreditAllowed: boolean;
   scoreBreakdown: ScoreBreakdownItem[];
-  notes: string[];
 }
 
 export interface EvaluationCategory {

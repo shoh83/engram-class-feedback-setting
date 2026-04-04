@@ -1,2 +1,3 @@
 Partial credit is enabled.
-If the answer is partially correct or conveys the idea with incomplete language control, explain how partial credit was awarded.
+If a response is partly correct, explain how partial credit affected the correct-answer count while still framing the final score as correct answers over total questions.
+When partial credit is used, apply it at the individual-question level and explain it separately for each affected question.

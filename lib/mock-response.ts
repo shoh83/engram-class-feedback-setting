@@ -14,30 +14,24 @@ export function buildMockFeedback(config: FeedbackConfigState, inputs: WritingIn
     },
     scoring: {
       enabled: config.assignmentType === "descriptive-answer" && config.scoring.enabled,
-      totalScore: config.assignmentType === "descriptive-answer" && config.scoring.enabled ? 7 : null,
-      maxScore: config.assignmentType === "descriptive-answer" && config.scoring.enabled ? 10 : null,
+      correctAnswers: config.assignmentType === "descriptive-answer" && config.scoring.enabled ? 7 : null,
+      totalQuestions: config.assignmentType === "descriptive-answer" && config.scoring.enabled ? 10 : null,
       partialCreditAllowed: config.scoring.allowPartialCredit,
       scoreBreakdown:
         config.assignmentType === "descriptive-answer" && config.scoring.enabled
           ? [
-              {
-                label: "Content match",
-                score: 4,
-                rationale: "The response addresses the task but leaves one supporting point thin."
-              },
-              {
-                label: "Language control",
-                score: 3,
-                rationale: "Meaning is clear, though verb forms and articles still need work."
+            {
+              questionNumber: 1,
+              score: 1,
+              rationale: "The answer is fully correct and directly addresses the required content."
+            },
+            {
+              questionNumber: 2,
+              score: config.scoring.allowPartialCredit ? 0.5 : 0,
+              rationale: config.scoring.allowPartialCredit
+                ? "The answer captures part of the required idea, so partial credit is justified."
+                  : "The answer misses a required detail, so it does not count as correct."
               }
-            ]
-          : [],
-      notes:
-        config.assignmentType === "descriptive-answer" && config.scoring.enabled
-          ? [
-              config.scoring.allowPartialCredit
-                ? "Partial credit was applied because the student conveyed the main idea with imperfect language."
-                : "Binary scoring was not used; the answer was evaluated with the enabled descriptive-answer rubric."
             ]
           : []
     },
