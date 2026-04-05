@@ -44,7 +44,6 @@ function evaluationSchema(config: FeedbackConfigState) {
     shape.categories = z.array(
       z.object({
         key: categoryEnum,
-        label: z.string(),
         grade: gradeEnum,
         summary: z.string()
       })
@@ -64,7 +63,6 @@ function feedbackSchema(config: FeedbackConfigState) {
   if (config.feedback.includeCategoryFeedback) {
     const categoryShape: Record<string, z.ZodTypeAny> = {
       key: categoryEnum,
-      label: z.string(),
       feedback: z.string()
     };
 

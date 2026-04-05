@@ -63,7 +63,6 @@ export function buildMockFeedback(config: FeedbackConfigState, inputs: WritingIn
     if (config.evaluation.includeCategories) {
       result.evaluation.categories = CATEGORY_ORDER.map((key, index) => ({
         key,
-        label: CATEGORY_LABELS[key],
         grade: (["B", "B", "B", "C", "C"] as const)[index],
         summary:
           key === "grammarAccuracy"
@@ -85,7 +84,6 @@ export function buildMockFeedback(config: FeedbackConfigState, inputs: WritingIn
       result.feedback.categories = CATEGORY_ORDER.map((key) => {
         const base = {
           key,
-          label: CATEGORY_LABELS[key],
           feedback:
             key === "structure"
               ? "Add a stronger ending sentence so the paragraph feels more complete."

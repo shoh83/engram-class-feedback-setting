@@ -98,7 +98,6 @@ export interface ScoringResult {
 
 export interface EvaluationCategory {
   key: FeedbackCategory;
-  label: string;
   grade: GradeLetter;
   summary: string;
 }
@@ -111,7 +110,6 @@ export interface EvaluationResult {
 
 export interface FeedbackCategoryEntry {
   key: FeedbackCategory;
-  label: string;
   feedback: string;
   example?: string;
 }

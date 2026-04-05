@@ -1,5 +1,6 @@
 "use client";
 
+import { CATEGORY_LABELS, UI_LABELS } from "@/lib/constants";
 import type { FeedbackCategoryEntry, FeedbackResponse } from "@/types/app";
 
 interface OutputCardsProps {
@@ -26,11 +27,33 @@ function EditableText({
   );
 }
 
+function LabeledEditor({
+  label,
+  value,
+  onChange,
+  minHeight = 80
+}: {
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+  minHeight?: number;
+}) {
+  return (
+    <div className="field">
+      <label>{label}</label>
+      <EditableText value={value} onChange={onChange} minHeight={minHeight} />
+    </div>
+  );
+}
+
 export function OutputCards({ result, onChange }: OutputCardsProps) {
   if (!result) {
     return <div className="muted-banner">Structured feedback cards will appear here after generation.</div>;
   }
 
+  const language = result.meta.outputLanguage;
+  const ui = UI_LABELS[language];
+  const categoryLabels = CATEGORY_LABELS[language];
   const scoring = result.scoring;
   const evaluation = result.evaluation;
   const feedback = result.feedback;
@@ -40,16 +63,17 @@ export function OutputCards({ result, onChange }: OutputCardsProps) {
   return (
     <div className="result-grid">
       <div className="result-card">
-        <h3>Meta</h3>
+        <h3>{ui.meta}</h3>
         <div className="card-list">
           <div className="inline-note">
-            Language: <strong>{result.meta.outputLanguage}</strong> | Assignment type:{" "}
-            <strong>{result.meta.assignmentType}</strong> | Level:{" "}
+            {ui.language}: <strong>{result.meta.outputLanguage}</strong> | {ui.assignmentType}:{" "}
+            <strong>{result.meta.assignmentType}</strong> | {ui.level}:{" "}
             <strong>
               {result.meta.studentLevel.schoolStage}/{result.meta.studentLevel.proficiency}
             </strong>
           </div>
-          <EditableText
+          <LabeledEditor
+            label="generatedAt"
             value={result.meta.generatedAt}
             onChange={(value) =>
               onChange({
@@ -67,10 +91,11 @@ export function OutputCards({ result, onChange }: OutputCardsProps) {
 
       {scoring ? (
         <div className="result-card">
-          <h3>Scoring</h3>
+          <h3>{ui.scoring}</h3>
           <div className="card-list">
-            <EditableText
-              value={`Correct Answers: ${scoring.correctAnswers ?? ""} / ${scoring.totalQuestions ?? ""}`}
+            <LabeledEditor
+              label={ui.correctAnswers}
+              value={`${scoring.correctAnswers ?? ""} / ${scoring.totalQuestions ?? ""}`}
               onChange={(value) => {
                 const match = value.match(/(\d+)\s*\/\s*(\d+)/);
                 onChange({
@@ -86,8 +111,9 @@ export function OutputCards({ result, onChange }: OutputCardsProps) {
             />
             {scoring.scoreBreakdown.map((item, index) => (
               <div key={`${item.questionNumber}-${index}`} className="result-card">
-                <h4>{item.questionNumber}번</h4>
-                <EditableText
+                <h4>{language === "korean" ? `${item.questionNumber}번` : `Question ${item.questionNumber}`}</h4>
+                <LabeledEditor
+                  label={ui.questionNumber}
                   value={String(item.questionNumber)}
                   onChange={(value) => {
                     const next = [...scoring.scoreBreakdown];
@@ -102,7 +128,8 @@ export function OutputCards({ result, onChange }: OutputCardsProps) {
                   }}
                   minHeight={56}
                 />
-                <EditableText
+                <LabeledEditor
+                  label={ui.score}
                   value={String(item.score)}
                   onChange={(value) => {
                     const next = [...scoring.scoreBreakdown];
@@ -117,7 +144,8 @@ export function OutputCards({ result, onChange }: OutputCardsProps) {
                   }}
                   minHeight={56}
                 />
-                <EditableText
+                <LabeledEditor
+                  label={ui.rationale}
                   value={item.rationale}
                   onChange={(value) => {
                     const next = [...scoring.scoreBreakdown];
@@ -139,10 +167,11 @@ export function OutputCards({ result, onChange }: OutputCardsProps) {
 
       {evaluation ? (
         <div className="result-card">
-          <h3>Evaluation</h3>
+          <h3>{ui.evaluation}</h3>
           <div className="card-list">
             {evaluation.overallGrade ? (
-              <EditableText
+              <LabeledEditor
+                label={ui.overallGrade}
                 value={evaluation.overallGrade}
                 onChange={(value) =>
                   onChange({
@@ -157,7 +186,8 @@ export function OutputCards({ result, onChange }: OutputCardsProps) {
               />
             ) : null}
             {typeof evaluation.overallEvaluation === "string" ? (
-              <EditableText
+              <LabeledEditor
+                label={ui.overallEvaluation}
                 value={evaluation.overallEvaluation}
                 onChange={(value) =>
                   onChange({
@@ -172,8 +202,9 @@ export function OutputCards({ result, onChange }: OutputCardsProps) {
             ) : null}
             {(evaluation.categories ?? []).map((category, index) => (
               <div key={category.key} className="result-card">
-                <h4>{category.label}</h4>
-                <EditableText
+                <h4>{categoryLabels[category.key]}</h4>
+                <LabeledEditor
+                  label={ui.categoryGrade}
                   value={category.grade}
                   onChange={(value) => {
                     const next = [...(evaluation.categories ?? [])];
@@ -191,7 +222,8 @@ export function OutputCards({ result, onChange }: OutputCardsProps) {
                   }}
                   minHeight={56}
                 />
-                <EditableText
+                <LabeledEditor
+                  label={ui.categorySummary}
                   value={category.summary}
                   onChange={(value) => {
                     const next = [...(evaluation.categories ?? [])];
@@ -213,10 +245,11 @@ export function OutputCards({ result, onChange }: OutputCardsProps) {
 
       {feedback ? (
         <div className="result-card">
-          <h3>Feedback</h3>
+          <h3>{ui.feedback}</h3>
           <div className="card-list">
             {typeof feedback.overallFeedback === "string" ? (
-              <EditableText
+              <LabeledEditor
+                label={ui.overallFeedback}
                 value={feedback.overallFeedback}
                 onChange={(value) =>
                   onChange({
@@ -234,8 +267,9 @@ export function OutputCards({ result, onChange }: OutputCardsProps) {
 
               return (
                 <div key={category.key} className="result-card">
-                  <h4>{category.label}</h4>
-                  <EditableText
+                  <h4>{categoryLabels[category.key]}</h4>
+                  <LabeledEditor
+                    label={ui.categoryFeedback}
                     value={category.feedback}
                     onChange={(value) => {
                       nextCategories[index] = { ...category, feedback: value };
@@ -249,7 +283,8 @@ export function OutputCards({ result, onChange }: OutputCardsProps) {
                     }}
                   />
                   {typeof category.example === "string" ? (
-                    <EditableText
+                    <LabeledEditor
+                      label={ui.categoryExample}
                       value={category.example}
                       onChange={(value) => {
                         nextCategories[index] = { ...category, example: value };
@@ -272,11 +307,12 @@ export function OutputCards({ result, onChange }: OutputCardsProps) {
 
       {strengths ? (
         <div className="result-card">
-          <h3>Strengths</h3>
+          <h3>{ui.strengths}</h3>
           <div className="card-list">
             {strengths.items.map((item, index) => (
-              <EditableText
+              <LabeledEditor
                 key={`strength-${index}`}
+                label={`${ui.strengths} ${index + 1}`}
                 value={item}
                 onChange={(value) => {
                   const next = [...strengths.items];
@@ -296,11 +332,12 @@ export function OutputCards({ result, onChange }: OutputCardsProps) {
 
       {areasToImprove ? (
         <div className="result-card">
-          <h3>Areas To Improve</h3>
+          <h3>{ui.areasToImprove}</h3>
           <div className="card-list">
             {areasToImprove.items.map((item, index) => (
-              <EditableText
+              <LabeledEditor
                 key={`improve-${index}`}
+                label={`${ui.areasToImprove} ${index + 1}`}
                 value={item}
                 onChange={(value) => {
                   const next = [...areasToImprove.items];
@@ -319,8 +356,9 @@ export function OutputCards({ result, onChange }: OutputCardsProps) {
       ) : null}
 
       <div className="result-card">
-        <h3>Detailed Improvements</h3>
-        <EditableText
+        <h3>{ui.detailedImprovements}</h3>
+        <LabeledEditor
+          label={ui.summary}
           value={result.improvements.summary}
           onChange={(value) =>
             onChange({
@@ -335,7 +373,8 @@ export function OutputCards({ result, onChange }: OutputCardsProps) {
         <div className="card-list">
           {result.improvements.detailedItems.map((item, index) => (
             <div key={`${item.original}-${item.revised}-${index}`} className="result-card">
-              <EditableText
+              <LabeledEditor
+                label={ui.originalTextSpan}
                 value={item.original}
                 onChange={(value) => {
                   const next = [...result.improvements.detailedItems];
@@ -350,7 +389,8 @@ export function OutputCards({ result, onChange }: OutputCardsProps) {
                 }}
                 minHeight={56}
               />
-              <EditableText
+              <LabeledEditor
+                label={ui.revisedTextSpan}
                 value={item.revised}
                 onChange={(value) => {
                   const next = [...result.improvements.detailedItems];
@@ -365,7 +405,8 @@ export function OutputCards({ result, onChange }: OutputCardsProps) {
                 }}
                 minHeight={56}
               />
-              <EditableText
+              <LabeledEditor
+                label={ui.rationale}
                 value={item.rationale}
                 onChange={(value) => {
                   const next = [...result.improvements.detailedItems];
