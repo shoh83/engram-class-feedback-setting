@@ -90,7 +90,6 @@ export interface ScoreBreakdownItem {
 }
 
 export interface ScoringResult {
-  enabled: boolean;
   correctAnswers: number | null;
   totalQuestions: number | null;
   partialCreditAllowed: boolean;
@@ -105,56 +104,49 @@ export interface EvaluationCategory {
 }
 
 export interface EvaluationResult {
-  enabled: boolean;
-  overallGrade: GradeLetter | null;
-  overallEvaluation: string;
-  categories: EvaluationCategory[];
+  overallGrade?: GradeLetter | null;
+  overallEvaluation?: string;
+  categories?: EvaluationCategory[];
 }
 
 export interface FeedbackCategoryEntry {
   key: FeedbackCategory;
   label: string;
   feedback: string;
-  example: string;
+  example?: string;
 }
 
 export interface FeedbackResult {
-  enabled: boolean;
-  overallFeedback: string;
-  categories: FeedbackCategoryEntry[];
+  overallFeedback?: string;
+  categories?: FeedbackCategoryEntry[];
 }
 
 export interface ImprovementItem {
-  title: string;
   original: string;
   revised: string;
   rationale: string;
-  tip: string;
 }
 
 export interface ImprovementsResult {
-  enabled: boolean;
   summary: string;
   detailedItems: ImprovementItem[];
 }
 
 export interface StrengthsResult {
-  enabled: boolean;
   items: string[];
 }
 
 export interface AreasToImproveResult {
-  enabled: boolean;
   items: string[];
 }
 
 export interface FeedbackResponse {
   meta: OutputMeta;
-  scoring: ScoringResult;
-  evaluation: EvaluationResult;
-  feedback: FeedbackResult;
-  strengths: StrengthsResult;
-  areasToImprove: AreasToImproveResult;
+  scoring?: ScoringResult;
+  evaluation?: EvaluationResult;
+  feedback?: FeedbackResult;
+  strengths?: StrengthsResult;
+  areasToImprove?: AreasToImproveResult;
   improvements: ImprovementsResult;
 }
 

@@ -1,8 +1,6 @@
 Include a detailed improvements section.
 Return no more than {{max_detailed_improvement_items}} detailed improvement items.
 Each detailed improvement item must include:
-- a short title
 - the original text span
 - the revised text span
 - a rationale connected to a grammar rule, usage rule, or word meaning
-- a practical tip for the student

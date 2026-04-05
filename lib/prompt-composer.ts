@@ -16,11 +16,56 @@ interface TemplateValues {
   assignment_type: string;
   scoring_enabled: string;
   partial_credit_enabled: string;
+  active_sections_summary: string;
   max_detailed_improvement_items: string;
 }
 
 function renderTemplate(content: string, values: TemplateValues) {
   return content.replace(/\{\{(.*?)\}\}/g, (_, key) => values[key.trim() as keyof TemplateValues] ?? "");
+}
+
+function buildActiveSectionsSummary(config: FeedbackConfigState) {
+  const lines = ["Active response sections:"];
+
+  if (config.assignmentType === "descriptive-answer" && config.scoring.enabled) {
+    lines.push(`- scoring`);
+    lines.push(`- scoring.partialCreditAllowed: ${config.scoring.allowPartialCredit ? "yes" : "no"}`);
+  }
+
+  if (config.evaluation.enabled) {
+    lines.push(`- evaluation`);
+    if (config.evaluation.includeOverall) {
+      lines.push(`- evaluation.overall`);
+    }
+    if (config.evaluation.includeCategories) {
+      lines.push(`- evaluation.categories`);
+    }
+  }
+
+  if (config.feedback.enabled) {
+    lines.push(`- feedback`);
+    if (config.feedback.includeOverall) {
+      lines.push(`- feedback.overall`);
+    }
+    if (config.feedback.includeCategoryFeedback) {
+      lines.push(`- feedback.categories`);
+    }
+    if (config.feedback.includeCategoryFeedback && config.feedback.includeCategoryExamples) {
+      lines.push(`- feedback.categoryExamples`);
+    }
+  }
+
+  if (config.includeStrengths) {
+    lines.push(`- strengths`);
+  }
+
+  if (config.includeAreasToImprove) {
+    lines.push(`- areasToImprove`);
+  }
+
+  lines.push(`- improvements`);
+
+  return lines.join("\n");
 }
 
 function getPromptSequence(config: FeedbackConfigState) {
@@ -95,6 +140,7 @@ export async function composePrompt(config: FeedbackConfigState, inputs: Writing
     assignment_type: config.assignmentType,
     scoring_enabled: config.scoring.enabled ? "yes" : "no",
     partial_credit_enabled: config.scoring.allowPartialCredit ? "yes" : "no",
+    active_sections_summary: buildActiveSectionsSummary(config),
     max_detailed_improvement_items: String(config.maxDetailedImprovementItems)
   };
 
@@ -108,7 +154,7 @@ export async function composePrompt(config: FeedbackConfigState, inputs: Writing
     })
   );
 
-  const prompt = renderedFragments.map((fragment) => `[FILE: ${fragment.path}]\n${fragment.content}`).join("\n\n");
+  const prompt = renderedFragments.map((fragment) => fragment.content).join("\n\n");
 
   return {
     prompt,

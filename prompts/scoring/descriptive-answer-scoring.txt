@@ -1,5 +1,3 @@
-Descriptive-answer scoring is enabled.
-Provide a scoring result only because the assignment type is descriptive answer.
 Base the score on correct answers over the total number of questions.
 Return `correctAnswers`, `totalQuestions`, and a score breakdown with one item per question.
 Do not combine multiple questions into one breakdown item.

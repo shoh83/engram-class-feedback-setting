@@ -1,10 +1,10 @@
 import { NextResponse } from "next/server";
 
 import { composePrompt } from "@/lib/prompt-composer";
-import { feedbackResponseJsonSchema, feedbackResponseSchema } from "@/lib/schema";
+import { buildFeedbackResponseJsonSchema, buildFeedbackResponseSchema } from "@/lib/schema";
 import { getModelName, getOpenAIClient } from "@/lib/openai";
 import { buildMockFeedback } from "@/lib/mock-response";
-import type { GenerateRequest, GenerateResponse } from "@/types/app";
+import type { FeedbackResponse, GenerateRequest, GenerateResponse } from "@/types/app";
 
 export async function POST(request: Request) {
   const startedAt = Date.now();
@@ -12,6 +12,8 @@ export async function POST(request: Request) {
   try {
     const body = (await request.json()) as GenerateRequest;
     const promptPreview = await composePrompt(body.config, body.inputs);
+    const responseSchema = buildFeedbackResponseSchema(body.config);
+    const responseJsonSchema = buildFeedbackResponseJsonSchema(body.config);
     const model = getModelName();
 
     if (!process.env.OPENAI_API_KEY) {
@@ -53,9 +55,9 @@ export async function POST(request: Request) {
       text: {
         format: {
           type: "json_schema",
-          name: feedbackResponseJsonSchema.name,
-          schema: feedbackResponseJsonSchema.schema,
-          strict: feedbackResponseJsonSchema.strict
+          name: responseJsonSchema.name,
+          schema: responseJsonSchema.schema,
+          strict: responseJsonSchema.strict
         }
       }
     });
@@ -75,7 +77,7 @@ export async function POST(request: Request) {
         ? response.output_text
         : JSON.stringify(response.output ?? []);
 
-    const parsed = feedbackResponseSchema.parse(JSON.parse(outputText));
+    const parsed = responseSchema.parse(JSON.parse(outputText)) as FeedbackResponse;
 
     const result: GenerateResponse = {
       promptPreview,

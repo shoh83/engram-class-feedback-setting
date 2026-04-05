@@ -1,3 +1,2 @@
-Partial credit is enabled.
 If a response is partly correct, explain how partial credit affected the correct-answer count while still framing the final score as correct answers over total questions.
 When partial credit is used, apply it at the individual-question level and explain it separately for each affected question.
