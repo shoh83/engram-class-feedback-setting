@@ -26,7 +26,8 @@ export async function POST(request: Request) {
           totalTokens: null,
           usedMock: true,
           model
-        }
+        },
+        rawResponseJson: JSON.stringify(mockResult, null, 2)
       };
 
       return NextResponse.json(mockResponse);
@@ -86,7 +87,8 @@ export async function POST(request: Request) {
         totalTokens: usage?.total_tokens ?? null,
         usedMock: false,
         model
-      }
+      },
+      rawResponseJson: JSON.stringify(parsed, null, 2)
     };
 
     return NextResponse.json(result);

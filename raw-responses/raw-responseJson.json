@@ -1,0 +1,186 @@
+{
+  "meta": {
+    "outputLanguage": "korean",
+    "assignmentType": "essay",
+    "studentLevel": {
+      "schoolStage": "elementary",
+      "proficiency": "middle"
+    },
+    "generatedAt": "2026-04-05T12:00:00Z",
+    "promptFiles": [
+      "prompts/role.txt",
+      "prompts/common-instructions.txt",
+      "prompts/language/korean.txt",
+      "prompts/levels/elementary.txt",
+      "prompts/levels/proficiency-middle.txt",
+      "prompts/assignment-types/essay.txt",
+      "prompts/evaluation/base.txt",
+      "prompts/evaluation/overall.txt",
+      "prompts/evaluation/categories.txt",
+      "prompts/feedback/base.txt",
+      "prompts/feedback/overall.txt",
+      "prompts/feedback/categories.txt",
+      "prompts/feedback/examples.txt",
+      "prompts/feedback/strengths.txt",
+      "prompts/feedback/areas-to-improve.txt",
+      "prompts/output/detailed-improvements.txt",
+      "prompts/output/structured-output.txt"
+    ]
+  },
+  "scoring": {
+    "enabled": false,
+    "correctAnswers": null,
+    "totalQuestions": null,
+    "partialCreditAllowed": false,
+    "scoreBreakdown": []
+  },
+  "evaluation": {
+    "enabled": true,
+    "overallGrade": "B",
+    "overallEvaluation": "이 글은 질문 5개에 모두 답하면서 이야기의 주요 사건과 결말을 잘 전달했습니다. 내용 이해는 전반적으로 가능했고, 특히 사건의 흐름을 순서대로 적으려는 점이 좋았습니다. 다만 문장을 연결하는 방식과 동사 표현, 관사·복수형 같은 문법에서 오류가 자주 보여서 더 자연스럽게 다듬을 필요가 있습니다.",
+    "categories": [
+      {
+        "key": "taskCompletion",
+        "label": "과제 수행 및 주제 관련성",
+        "grade": "A",
+        "summary": "모든 질문에 빠짐없이 답했고, 책의 인물·사건·배경·이유·결말을 주제에서 벗어나지 않고 썼습니다."
+      },
+      {
+        "key": "meaningDelivery",
+        "label": "의미 전달과 내용 이해",
+        "grade": "B",
+        "summary": "전하고 싶은 내용은 대부분 이해됩니다. 특히 큰 사건과 결말은 전달되지만, 일부 표현이 부자연스러워 읽는 사람이 잠시 멈춰 해석해야 하는 부분이 있습니다."
+      },
+      {
+        "key": "structure",
+        "label": "구조와 흐름",
+        "grade": "B",
+        "summary": "사건을 시간 순서대로 이어 가려는 점은 좋습니다. 다만 한 문장에 정보가 많이 들어가서 문장을 나누면 흐름이 더 또렷해집니다."
+      },
+      {
+        "key": "vocabularyExpression",
+        "label": "어휘와 표현",
+        "grade": "B",
+        "summary": "기본 어휘로 필요한 내용을 표현했습니다. 하지만 몇몇 표현은 영어에서 자연스럽지 않아 더 자주 쓰는 표현으로 바꾸면 글이 훨씬 좋아집니다."
+      },
+      {
+        "key": "grammarAccuracy",
+        "label": "문법 정확성",
+        "grade": "C",
+        "summary": "대문자, 마침표, 동사 형태, 관사, 복수형, 전치사에서 오류가 여러 번 보입니다. 그래도 핵심 의미는 대체로 유지되었습니다."
+      }
+    ]
+  },
+  "feedback": {
+    "enabled": true,
+    "overallFeedback": "이야기의 핵심 내용을 끝까지 잘 써 주었습니다. 이제는 긴 문장을 두세 문장으로 나누고, 동사 표현을 조금 더 정확하게 쓰는 연습을 하면 글이 훨씬 자연스러워질 거예요.",
+    "categories": [
+      {
+        "key": "taskCompletion",
+        "label": "과제 수행 및 주제 관련성",
+        "feedback": "모든 질문에 답해서 과제를 잘 완성했습니다. 지금처럼 핵심 정보를 빠짐없이 쓰는 습관을 계속 유지하세요.",
+        "example": "The main character was Finlay."
+      },
+      {
+        "key": "meaningDelivery",
+        "label": "의미 전달과 내용 이해",
+        "feedback": "중요한 사건과 결과가 잘 보입니다. 다만 원인과 결과를 나누어 쓰면 뜻이 더 분명해집니다.",
+        "example": "While the students were playing, the red paint spilled into the water tank, so the dog barked to save the fish."
+      },
+      {
+        "key": "structure",
+        "label": "구조와 흐름",
+        "feedback": "한 문장에 내용이 많을 때는 문장을 나누세요. 그러면 읽는 사람이 사건 순서를 더 쉽게 따라갈 수 있습니다.",
+        "example": "The dog bit his mask, so he painted his mask red. While the students were playing, the red paint spilled into the water tank."
+      },
+      {
+        "key": "vocabularyExpression",
+        "label": "어휘와 표현",
+        "feedback": "자주 쓰는 자연스러운 표현을 익히면 글이 더 좋아집니다. 특히 동작이나 상황을 나타내는 표현을 정확히 선택해 보세요.",
+        "example": "didn't attention → was not paying attention / filled into → spilled into"
+      },
+      {
+        "key": "grammarAccuracy",
+        "label": "문법 정확성",
+        "feedback": "문장 첫 글자 대문자, 마침표, 동사의 시제를 먼저 점검해 보세요. 작은 문법 수정만으로도 글이 훨씬 깔끔해집니다.",
+        "example": "the main character was Finlay → The main character was Finlay. / dog save all fishes → the dog saved all the fish."
+      }
+    ]
+  },
+  "strengths": {
+    "enabled": true,
+    "items": [
+      "질문 5개에 모두 답하며 이야기의 핵심 내용을 잘 담았습니다.",
+      "사건의 순서를 따라 쓰려고 해서 내용 흐름을 파악하기 쉬웠습니다."
+    ]
+  },
+  "areasToImprove": {
+    "enabled": true,
+    "items": [
+      "긴 문장을 짧게 나누어 쓰면 의미가 더 분명해집니다.",
+      "동사 표현과 기본 문법(시제, 관사, 복수형, 대문자)을 더 정확히 써 보세요."
+    ]
+  },
+  "improvements": {
+    "enabled": true,
+    "summary": "가장 중요한 수정 포인트는 자연스러운 동사 표현, 문장 나누기, 그리고 기본 문법 정확성입니다. 아래 예시처럼 조금씩 고치면 같은 내용도 훨씬 더 매끄럽게 전달할 수 있습니다.",
+    "detailedItems": [
+      {
+        "title": "자연스러운 표현으로 고치기",
+        "original": "Finlay didn't attention to the teacher",
+        "revised": "Finlay was not paying attention to the teacher",
+        "rationale": "영어에서는 attention을 동사처럼 쓰지 않고 pay attention to라는 표현으로 씁니다.",
+        "tip": "자주 쓰는 표현은 통째로 외우세요: pay attention to ~"
+      },
+      {
+        "title": "관사 넣기",
+        "original": "he brought real dog",
+        "revised": "he brought a real dog",
+        "rationale": "셀 수 있는 단수 명사 dog 앞에는 보통 a 또는 the가 필요합니다.",
+        "tip": "단수 명사를 쓸 때는 앞에 a/an/the가 필요한지 먼저 확인해 보세요."
+      },
+      {
+        "title": "불필요한 전치사 빼기",
+        "original": "painted his mask to red",
+        "revised": "painted his mask red",
+        "rationale": "paint + 목적어 + 색깔 형태로 써서 상태 변화를 나타냅니다. to는 필요하지 않습니다.",
+        "tip": "색깔로 바뀌는 표현은 make it red, paint it red처럼 써 보세요."
+      },
+      {
+        "title": "알맞은 동사 선택하기",
+        "original": "the red paint filled into the water tank",
+        "revised": "the red paint spilled into the water tank",
+        "rationale": "액체가 흘러 들어간 상황은 filled보다 spilled into가 더 자연스럽습니다.",
+        "tip": "물감, 물, 주스처럼 액체가 쏟아질 때는 spill을 떠올려 보세요."
+      },
+      {
+        "title": "진행형으로 상황 나타내기",
+        "original": "while they practiced the play",
+        "revised": "while they were practicing the play",
+        "rationale": "이야기 속에서 한창 진행 중이던 상황은 were + ing 형태가 더 자연스럽습니다.",
+        "tip": "while가 나오면 was/were + ing가 어울리는지 확인해 보세요."
+      },
+      {
+        "title": "더 자연스러운 원인 표현",
+        "original": "the red paint was down to the fish tank",
+        "revised": "the red paint went into the fish tank",
+        "rationale": "was down to는 여기서 자연스럽지 않습니다. 물감이 어항 안으로 들어갔다는 뜻을 직접 써 주는 것이 좋습니다.",
+        "tip": "어려운 표현보다 go into, fall into처럼 쉬운 표현을 정확하게 쓰는 것이 더 좋습니다."
+      },
+      {
+        "title": "복수형과 관사 고치기",
+        "original": "all fishes in the tank",
+        "revised": "all the fish in the tank",
+        "rationale": "fish는 복수로도 fish를 많이 쓰며, 특정한 어항의 물고기이므로 the를 쓰는 것이 자연스럽습니다.",
+        "tip": "fish의 복수형은 보통 fish로 먼저 써 보세요."
+      },
+      {
+        "title": "과거 시제 맞추기",
+        "original": "dog save all fishes",
+        "revised": "the dog saved all the fish",
+        "rationale": "이야기 전체가 과거 사건이므로 save도 과거형 saved로 맞춰야 합니다.",
+        "tip": "이야기를 쓸 때는 문장마다 동사가 과거형인지 마지막에 한 번씩 점검해 보세요. "
+      }
+    ]
+  }
+}

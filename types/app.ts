@@ -176,6 +176,7 @@ export interface GenerateResponse {
   promptPreview: PromptPreviewData;
   result: FeedbackResponse;
   metrics: ResponseMetrics;
+  rawResponseJson: string;
 }
 
 export interface PromptFileRecord {

@@ -3,6 +3,7 @@
 import { useEffect, useState, useTransition } from "react";
 
 import { ConfigForm } from "@/components/ConfigForm";
+import { JsonResponsePanel } from "@/components/JsonResponsePanel";
 import { MetricsDisplay } from "@/components/MetricsDisplay";
 import { OutputCards } from "@/components/OutputCards";
 import { PromptPanel } from "@/components/PromptPanel";
@@ -25,6 +26,7 @@ export function DemoApp() {
   const [promptFiles, setPromptFiles] = useState<PromptFileRecord[]>([]);
   const [result, setResult] = useState<FeedbackResponse | null>(null);
   const [metrics, setMetrics] = useState<ResponseMetrics | null>(null);
+  const [rawResponseJson, setRawResponseJson] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
   const [isSavingPrompt, setIsSavingPrompt] = useState(false);
@@ -60,6 +62,7 @@ export function DemoApp() {
         setUsedFiles(data.promptPreview.usedFiles);
         setResult(data.result);
         setMetrics(data.metrics);
+        setRawResponseJson(data.rawResponseJson);
         await loadPromptFiles();
       } catch (fetchError) {
         setError(fetchError instanceof Error ? fetchError.message : "Generation failed.");
@@ -124,6 +127,7 @@ export function DemoApp() {
                 onClick={() => {
                   setConfig(defaultConfig);
                   setInputs(sampleInputs);
+                  setRawResponseJson("");
                   setError(null);
                 }}
                 disabled={isPending || isSavingPrompt}
@@ -164,6 +168,7 @@ export function DemoApp() {
             <div className="panel-body stack">
               <MetricsDisplay metrics={metrics} />
               <OutputCards result={result} onChange={setResult} />
+              <JsonResponsePanel rawResponseJson={rawResponseJson} result={result} />
             </div>
           </div>
         </section>
