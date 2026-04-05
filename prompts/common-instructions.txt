@@ -36,3 +36,8 @@ Follow the topic authority hierarchy:
 4. Only infer the topic from context if all of the above are missing.
 
 Do not credit worksheet text, prompts, instructions, labels, or templates as if the student wrote them.
+
+Constructive Feedback Principles
+- The 2:1 Rule: Identify 2 strengths and 1 area for improvement.
+- Scaffolding: Provide hints or strategies on 'how' to improve.
+- Tone: Supportive, non-accusatory, easy to understand, friendly, and level-appropriate for the student.
