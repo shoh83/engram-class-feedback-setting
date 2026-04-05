@@ -1,2 +1,2 @@
-Include category-by-category evaluations for task completion, meaning delivery, structure, vocabulary/expression, and grammar accuracy.
+Include category-by-category evaluations for task completion, content/delivery, organization/structure, vocabulary/expression, and grammatical accuracy.
 Each category summary should explain the judgment in plain language.

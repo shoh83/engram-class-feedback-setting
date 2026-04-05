@@ -18,6 +18,7 @@ interface TemplateValues {
   partial_credit_enabled: string;
   active_sections_summary: string;
   max_detailed_improvement_items: string;
+  max_further_improvement_items: string;
 }
 
 function renderTemplate(content: string, values: TemplateValues) {
@@ -64,6 +65,7 @@ function buildActiveSectionsSummary(config: FeedbackConfigState) {
   }
 
   lines.push(`- improvements`);
+  lines.push(`- furtherImprovements`);
 
   return lines.join("\n");
 }
@@ -117,6 +119,7 @@ function getPromptSequence(config: FeedbackConfigState) {
   }
 
   files.push("prompts/output/detailed-improvements.txt");
+  files.push("prompts/output/further-improvements.txt");
   files.push("prompts/output/structured-output.txt");
 
   return files;
@@ -141,7 +144,8 @@ export async function composePrompt(config: FeedbackConfigState, inputs: Writing
     scoring_enabled: config.scoring.enabled ? "yes" : "no",
     partial_credit_enabled: config.scoring.allowPartialCredit ? "yes" : "no",
     active_sections_summary: buildActiveSectionsSummary(config),
-    max_detailed_improvement_items: String(config.maxDetailedImprovementItems)
+    max_detailed_improvement_items: String(config.maxDetailedImprovementItems),
+    max_further_improvement_items: String(config.maxFurtherImprovementItems)
   };
 
   const renderedFragments = await Promise.all(

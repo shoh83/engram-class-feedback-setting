@@ -29,18 +29,19 @@ export const UI_LABELS: Record<
     questionNumber: string;
     score: string;
     rationale: string;
-    evaluation: string;
+    review: string;
     overallGrade: string;
-    overallEvaluation: string;
+    overallComment: string;
     categoryGrade: string;
-    categorySummary: string;
-    feedback: string;
-    overallFeedback: string;
-    categoryFeedback: string;
-    categoryExample: string;
+    categoryComment: string;
+    categoryExampleSection: string;
+    categoryExampleBefore: string;
+    categoryExampleAfter: string;
+    categoryExampleWhy: string;
     strengths: string;
     areasToImprove: string;
     detailedImprovements: string;
+    furtherImprovements: string;
     summary: string;
     originalTextSpan: string;
     revisedTextSpan: string;
@@ -61,18 +62,19 @@ export const UI_LABELS: Record<
     questionNumber: "Question Number",
     score: "Score",
     rationale: "Rationale",
-    evaluation: "Evaluation",
+    review: "Review",
     overallGrade: "Overall Grade",
-    overallEvaluation: "Overall Evaluation",
+    overallComment: "Overall Comment",
     categoryGrade: "Grade",
-    categorySummary: "Summary",
-    feedback: "Feedback",
-    overallFeedback: "Overall Feedback",
-    categoryFeedback: "Category Feedback",
-    categoryExample: "Improvement Example",
+    categoryComment: "Comment",
+    categoryExampleSection: "Example",
+    categoryExampleBefore: "Before",
+    categoryExampleAfter: "After",
+    categoryExampleWhy: "Explanation",
     strengths: "Strengths",
     areasToImprove: "Areas To Improve",
     detailedImprovements: "Detailed Improvements",
+    furtherImprovements: "Further Improvements",
     summary: "Summary",
     originalTextSpan: "Original Text Span",
     revisedTextSpan: "Revised Text Span",
@@ -89,22 +91,23 @@ export const UI_LABELS: Record<
     assignmentType: "과제 유형",
     level: "수준",
     scoring: "채점 결과",
-    correctAnswers: "정수",
+    correctAnswers: "점수",
     questionNumber: "문항",
     score: "점수",
     rationale: "근거",
-    evaluation: "평가 결과",
+    review: "평가 및 피드백",
     overallGrade: "종합 등급",
-    overallEvaluation: "종합 평가 요약",
+    overallComment: "종합 코멘트",
     categoryGrade: "등급",
-    categorySummary: "평가 요약",
-    feedback: "피드백",
-    overallFeedback: "종합 피드백",
-    categoryFeedback: "피드백",
-    categoryExample: "개선 예시",
+    categoryComment: "코멘트",
+    categoryExampleSection: "개선 예시",
+    categoryExampleBefore: "수정 전",
+    categoryExampleAfter: "수정 후",
+    categoryExampleWhy: "설명",
     strengths: "잘한 점",
     areasToImprove: "보완할 점",
     detailedImprovements: "세부 개선 사항",
+    furtherImprovements: "추가 개선 사항",
     summary: "요약",
     originalTextSpan: "원문 표현",
     revisedTextSpan: "수정 표현",

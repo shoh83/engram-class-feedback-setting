@@ -24,7 +24,8 @@ export const defaultConfig: FeedbackConfigState = {
   },
   includeStrengths: true,
   includeAreasToImprove: true,
-  maxDetailedImprovementItems: 4
+  maxDetailedImprovementItems: 4,
+  maxFurtherImprovementItems: 4
 };
 
 export const sampleInputs: WritingInputs = {

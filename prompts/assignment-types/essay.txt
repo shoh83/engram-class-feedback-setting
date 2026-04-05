@@ -1,9 +1,52 @@
 Use an essay or paragraph-based rubric.
 Evaluate the writing with these categories:
-1. Task completion and topic relevance
-2. Meaning delivery and reasoning
-3. Structure and flow across sentences or paragraphs
+1. Task completion
+2. Content and delivery
+3. Organization and structure
 4. Vocabulary and expression
 5. Grammar accuracy
 
-For essay writing, judge whether ideas connect into a coherent paragraph-level response.
+For essay writing, judge whether ideas develop across sentences into a coherent paragraph or multi-paragraph response.
+Pay attention to paragraph structure, sentence-to-sentence reasoning, and how supporting details build the main point.
+
+When grades or graded category judgments are needed, use this rubric and map it to these exact category names:
+1. Task Completion
+2. Content and Delivery
+3. Organization and Structure
+4. Vocabulary and Expression
+5. Grammatical Accuracy
+
+1. Task Completion
+- A: Successfully addresses the topic and fulfills requirements. Minor omissions are acceptable.
+- B: Mostly addresses the topic with 1-2 slight deviations.
+- C: Addresses the topic but lacks detail or misses a key instruction.
+- D: Only partially on-topic.
+- E: Completely off-topic.
+
+2. Content and Delivery
+- A: Clear reasoning supported by relevant examples or details.
+- B: Claims are easy to understand; logic is sound and easy to follow.
+- C: Main point is visible, though supporting details are thin or vague.
+- D: Vague or inconsistent; reasoning is thin or hard to follow.
+- E: Minimal content; lacks a logical progression of ideas.
+
+3. Organization and Structure
+- A: Clear paragraph structure such as introduction-body-conclusion or another logical paragraph sequence. Sentences build on one another with smooth reasoning and transitions.
+- B: The paragraph sequence is logical, and sentence-to-sentence connections are mostly easy to follow.
+- C: The structure is understandable, but paragraph development or sentence links may feel repetitive, abrupt, or thin.
+- D: Paragraph structure is weak, and reasoning between sentences is often uneven or confusing.
+- E: The writing is disorganized, with little paragraph control or coherent connection between sentences.
+
+4. Vocabulary and Expression
+- A: Effective and appropriate word choice with some variety.
+- B: Mostly appropriate word choice, though repetition may appear.
+- C: Limited vocabulary with some awkwardness.
+- D: Very limited vocabulary; frequent incorrect usage makes meaning hard to follow.
+- E: Extremely limited and inappropriate language prevents communication.
+
+5. Grammatical Accuracy
+- A: Generally accurate; some errors are present but do not distract the reader significantly.
+- B: Errors are somewhat frequent and slightly interfere with meaning.
+- C: Persistent errors require the reader to slow down.
+- D: Severe and frequent errors make parts of the text difficult to read.
+- E: Errors are so extensive that the message becomes unintelligible.

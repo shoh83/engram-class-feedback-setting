@@ -252,6 +252,19 @@ export function ConfigForm({ config, onChange }: ConfigFormProps) {
           onChange={(event) => update("maxDetailedImprovementItems", Number(event.target.value))}
         />
       </div>
+
+      <div className="field">
+        <label htmlFor="maxFurtherImprovementItems">Maximum further improvement items</label>
+        <input
+          id="maxFurtherImprovementItems"
+          className="control"
+          type="number"
+          min={1}
+          max={10}
+          value={config.maxFurtherImprovementItems}
+          onChange={(event) => update("maxFurtherImprovementItems", Number(event.target.value))}
+        />
+      </div>
     </div>
   );
 }

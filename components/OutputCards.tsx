@@ -1,7 +1,7 @@
 "use client";
 
 import { CATEGORY_LABELS, UI_LABELS } from "@/lib/constants";
-import type { FeedbackCategoryEntry, FeedbackResponse } from "@/types/app";
+import type { FeedbackResponse, ReviewCategoryEntry } from "@/types/app";
 
 interface OutputCardsProps {
   result: FeedbackResponse | null;
@@ -55,8 +55,7 @@ export function OutputCards({ result, onChange }: OutputCardsProps) {
   const ui = UI_LABELS[language];
   const categoryLabels = CATEGORY_LABELS[language];
   const scoring = result.scoring;
-  const evaluation = result.evaluation;
-  const feedback = result.feedback;
+  const review = result.review;
   const strengths = result.strengths;
   const areasToImprove = result.areasToImprove;
 
@@ -165,142 +164,150 @@ export function OutputCards({ result, onChange }: OutputCardsProps) {
         </div>
       ) : null}
 
-      {evaluation ? (
+      {review ? (
         <div className="result-card">
-          <h3>{ui.evaluation}</h3>
+          <h3>{ui.review}</h3>
           <div className="card-list">
-            {evaluation.overallGrade ? (
+            {review.overallGrade ? (
               <LabeledEditor
                 label={ui.overallGrade}
-                value={evaluation.overallGrade}
+                value={review.overallGrade}
                 onChange={(value) =>
                   onChange({
                     ...result,
-                    evaluation: {
-                      ...evaluation,
-                      overallGrade: value.toUpperCase().slice(0, 1) as NonNullable<typeof evaluation>["overallGrade"]
+                    review: {
+                      ...review,
+                      overallGrade: value.toUpperCase().slice(0, 1) as NonNullable<typeof review>["overallGrade"]
                     }
                   })
                 }
                 minHeight={56}
               />
             ) : null}
-            {typeof evaluation.overallEvaluation === "string" ? (
+            {typeof review.overallComment === "string" ? (
               <LabeledEditor
-                label={ui.overallEvaluation}
-                value={evaluation.overallEvaluation}
+                label={ui.overallComment}
+                value={review.overallComment}
                 onChange={(value) =>
                   onChange({
                     ...result,
-                    evaluation: {
-                      ...evaluation,
-                      overallEvaluation: value
+                    review: {
+                      ...review,
+                      overallComment: value
                     }
                   })
                 }
               />
             ) : null}
-            {(evaluation.categories ?? []).map((category, index) => (
+            {(review.categories ?? []).map((category, index) => (
               <div key={category.key} className="result-card">
                 <h4>{categoryLabels[category.key]}</h4>
-                <LabeledEditor
-                  label={ui.categoryGrade}
-                  value={category.grade}
-                  onChange={(value) => {
-                    const next = [...(evaluation.categories ?? [])];
-                    next[index] = {
-                      ...category,
-                      grade: value.toUpperCase().slice(0, 1) as typeof category.grade
-                    };
-                    onChange({
-                      ...result,
-                      evaluation: {
-                        ...evaluation,
-                        categories: next
-                      }
-                    });
-                  }}
-                  minHeight={56}
-                />
-                <LabeledEditor
-                  label={ui.categorySummary}
-                  value={category.summary}
-                  onChange={(value) => {
-                    const next = [...(evaluation.categories ?? [])];
-                    next[index] = { ...category, summary: value };
-                    onChange({
-                      ...result,
-                      evaluation: {
-                        ...evaluation,
-                        categories: next
-                      }
-                    });
-                  }}
-                />
-              </div>
-            ))}
-          </div>
-        </div>
-      ) : null}
-
-      {feedback ? (
-        <div className="result-card">
-          <h3>{ui.feedback}</h3>
-          <div className="card-list">
-            {typeof feedback.overallFeedback === "string" ? (
-              <LabeledEditor
-                label={ui.overallFeedback}
-                value={feedback.overallFeedback}
-                onChange={(value) =>
-                  onChange({
-                    ...result,
-                    feedback: {
-                      ...feedback,
-                      overallFeedback: value
-                    }
-                  })
-                }
-              />
-            ) : null}
-            {(feedback.categories ?? []).map((category, index) => {
-              const nextCategories = [...(feedback.categories ?? [])] as FeedbackCategoryEntry[];
-
-              return (
-                <div key={category.key} className="result-card">
-                  <h4>{categoryLabels[category.key]}</h4>
+                {category.grade ? (
                   <LabeledEditor
-                    label={ui.categoryFeedback}
-                    value={category.feedback}
+                    label={ui.categoryGrade}
+                    value={category.grade}
                     onChange={(value) => {
-                      nextCategories[index] = { ...category, feedback: value };
+                      const next = [...(review.categories ?? [])];
+                      next[index] = {
+                        ...category,
+                        grade: value.toUpperCase().slice(0, 1) as typeof category.grade
+                      };
                       onChange({
                         ...result,
-                        feedback: {
-                          ...feedback,
-                          categories: nextCategories
+                        review: {
+                          ...review,
+                          categories: next
                         }
                       });
                     }}
+                    minHeight={56}
                   />
-                  {typeof category.example === "string" ? (
+                ) : null}
+                <LabeledEditor
+                  label={ui.categoryComment}
+                  value={category.comment}
+                  onChange={(value) => {
+                    const next = [...(review.categories ?? [])] as ReviewCategoryEntry[];
+                    next[index] = { ...category, comment: value };
+                    onChange({
+                      ...result,
+                      review: {
+                        ...review,
+                        categories: next
+                      }
+                    });
+                  }}
+                />
+                {category.exampleCase ? (
+                  <div className="result-card">
+                    <h4>{ui.categoryExampleSection}</h4>
                     <LabeledEditor
-                      label={ui.categoryExample}
-                      value={category.example}
+                      label={ui.categoryExampleBefore}
+                      value={category.exampleCase.before}
                       onChange={(value) => {
-                        nextCategories[index] = { ...category, example: value };
+                        const next = [...(review.categories ?? [])] as ReviewCategoryEntry[];
+                        next[index] = {
+                          ...category,
+                          exampleCase: {
+                            ...category.exampleCase!,
+                            before: value
+                          }
+                        };
                         onChange({
                           ...result,
-                          feedback: {
-                            ...feedback,
-                            categories: nextCategories
+                          review: {
+                            ...review,
+                            categories: next
                           }
                         });
                       }}
                     />
-                  ) : null}
-                </div>
-              );
-            })}
+                    <LabeledEditor
+                      label={ui.categoryExampleAfter}
+                      value={category.exampleCase.after}
+                      onChange={(value) => {
+                        const next = [...(review.categories ?? [])] as ReviewCategoryEntry[];
+                        next[index] = {
+                          ...category,
+                          exampleCase: {
+                            ...category.exampleCase!,
+                            after: value
+                          }
+                        };
+                        onChange({
+                          ...result,
+                          review: {
+                            ...review,
+                            categories: next
+                          }
+                        });
+                      }}
+                    />
+                    <LabeledEditor
+                      label={ui.categoryExampleWhy}
+                      value={category.exampleCase.why}
+                      onChange={(value) => {
+                        const next = [...(review.categories ?? [])] as ReviewCategoryEntry[];
+                        next[index] = {
+                          ...category,
+                          exampleCase: {
+                            ...category.exampleCase!,
+                            why: value
+                          }
+                        };
+                        onChange({
+                          ...result,
+                          review: {
+                            ...review,
+                            categories: next
+                          }
+                        });
+                      }}
+                    />
+                  </div>
+                ) : null}
+              </div>
+            ))}
           </div>
         </div>
       ) : null}
@@ -357,19 +364,6 @@ export function OutputCards({ result, onChange }: OutputCardsProps) {
 
       <div className="result-card">
         <h3>{ui.detailedImprovements}</h3>
-        <LabeledEditor
-          label={ui.summary}
-          value={result.improvements.summary}
-          onChange={(value) =>
-            onChange({
-              ...result,
-              improvements: {
-                ...result.improvements,
-                summary: value
-              }
-            })
-          }
-        />
         <div className="card-list">
           {result.improvements.detailedItems.map((item, index) => (
             <div key={`${item.original}-${item.revised}-${index}`} className="result-card">
@@ -420,6 +414,63 @@ export function OutputCards({ result, onChange }: OutputCardsProps) {
                     });
                   }}
                 />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="result-card">
+        <h3>{ui.furtherImprovements}</h3>
+        <div className="card-list">
+          {result.furtherImprovements.detailedItems.map((item, index) => (
+            <div key={`${item.original}-${item.revised}-${index}`} className="result-card">
+              <LabeledEditor
+                label={ui.originalTextSpan}
+                value={item.original}
+                onChange={(value) => {
+                  const next = [...result.furtherImprovements.detailedItems];
+                  next[index] = { ...item, original: value };
+                  onChange({
+                    ...result,
+                    furtherImprovements: {
+                      ...result.furtherImprovements,
+                      detailedItems: next
+                    }
+                  });
+                }}
+                minHeight={56}
+              />
+              <LabeledEditor
+                label={ui.revisedTextSpan}
+                value={item.revised}
+                onChange={(value) => {
+                  const next = [...result.furtherImprovements.detailedItems];
+                  next[index] = { ...item, revised: value };
+                  onChange({
+                    ...result,
+                    furtherImprovements: {
+                      ...result.furtherImprovements,
+                      detailedItems: next
+                    }
+                  });
+                }}
+                minHeight={56}
+              />
+              <LabeledEditor
+                label={ui.rationale}
+                value={item.rationale}
+                onChange={(value) => {
+                  const next = [...result.furtherImprovements.detailedItems];
+                  next[index] = { ...item, rationale: value };
+                  onChange({
+                    ...result,
+                    furtherImprovements: {
+                      ...result.furtherImprovements,
+                      detailedItems: next
+                    }
+                  });
+                }}
+              />
             </div>
           ))}
         </div>

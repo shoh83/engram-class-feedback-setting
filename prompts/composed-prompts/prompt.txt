@@ -7,7 +7,7 @@ Reference data:
 - Target language for the response: korean
 - Target school stage: elementary
 - Target proficiency: middle
-- Assignment type: essay
+- Assignment type: descriptive-answer
 - Assignment / topic directions: (none provided)
 
 Inputs:
@@ -139,13 +139,20 @@ CHANGES:
 30. type=replace; from="fishes"; to="the fish."; note="Replacement based on corrected wording."
 [END_DIFF_DATA]
 
+Interpret worksheet formatting as follows:
+1. Any text wrapped in double asterisks, like **this**, is printed worksheet text. It may be a page title, subtitle, section heading, prompt, instruction, guide, hint, label, sentence starter, question, or template.
+2. Any text not wrapped in double asterisks is the student's response.
+
+Use worksheet text for task completion, topic relevance, and grading context.
+Base evaluation, grading, praise, and revision advice only on the student's response in connection with that worksheet text.
+
 Follow the topic authority hierarchy:
 1. Use assignment directions first when present.
-2. Otherwise inspect inline directions or headers in the original text.
-3. Only infer the topic from context if both are missing.
+2. Otherwise use worksheet text wrapped in double asterisks from the original text.
+3. Only if both are missing, inspect other inline directions or headers in the original text that are clearly not student-written.
+4. Only infer the topic from context if all of the above are missing.
 
-Do not credit assignment-template wording as if it were student writing.
-Focus evaluation, praise, and revision advice only on the student's own response.
+Do not credit worksheet text, prompts, instructions, labels, or templates as if the student wrote them.
 
 
 Generate every natural-language field in Korean.
@@ -161,18 +168,76 @@ The student proficiency is middle.
 Balance encouragement with direct explanation, and give practical next-step advice.
 
 
-Use an essay or paragraph-based rubric.
+Use a short-answer or constructed-response rubric.
 Evaluate the writing with these categories:
-1. Task completion and topic relevance
-2. Meaning delivery and reasoning
-3. Structure and flow across sentences or paragraphs
+1. Task completion and answer relevance
+2. Content and delivery
+3. Organization and structure
 4. Vocabulary and expression
 5. Grammar accuracy
 
-For essay writing, judge whether ideas connect into a coherent paragraph-level response.
+For descriptive answers, focus less on full paragraph development and more on sentence composition, sentence-level clarity, and within-paragraph structure.
+Judge whether the response directly answers the task with sufficient support in a concise form.
 
 
-Evaluation is enabled.
+Use the following short-answer / constructed-response rubric when grades or graded category judgments are needed.
+Map the rubric to these exact category names:
+1. Task Completion
+2. Content and Delivery
+3. Organization and Structure
+4. Vocabulary and Expression
+5. Grammatical Accuracy
+
+1. Task Completion
+- A: Directly answers the question and fulfills all required parts. Minor omissions are acceptable.
+- B: Mostly answers the question with 1-2 slight gaps or deviations.
+- C: Answers the question but misses an important part or detail.
+- D: Only partially answers the question.
+- E: Does not answer the question appropriately.
+
+2. Content and Delivery
+- A: The intended meaning is complete and well supported with relevant details.
+- B: The answer is understandable and mostly supported.
+- C: The main idea is visible, but support is thin or vague.
+- D: The answer is unclear, inconsistent, or weakly supported.
+- E: The response contains minimal meaningful content.
+
+3. Organization and Structure
+- A: Sentences are well formed and ordered clearly within the short response or within a paragraph-length answer. The response reads smoothly at the sentence or within-paragraph level.
+- B: Sentence organization is mostly clear, and the short response is easy to follow.
+- C: Sentence composition or within-paragraph structure is understandable but uneven, mechanical, or loosely connected.
+- D: Weak sentence composition or weak within-paragraph structure makes the response hard to follow in places.
+- E: Sentence construction and local structure are so poor that the response becomes fragmented or confusing.
+
+4. Vocabulary and Expression
+- A: Word choice is accurate, appropriate, and efficient for the task.
+- B: Word choice is mostly appropriate, with some repetition or minor awkwardness.
+- C: Limited vocabulary causes occasional awkwardness.
+- D: Incorrect or very limited vocabulary interferes with meaning.
+- E: Vocabulary problems prevent effective communication.
+
+5. Grammatical Accuracy
+- A: Sentence forms are generally accurate; minor errors do not interfere with meaning.
+- B: Errors appear but meaning remains mostly clear.
+- C: Frequent errors slow comprehension.
+- D: Serious and repeated errors make parts of the response difficult to understand.
+- E: Errors are so severe that the response becomes unintelligible.
+
+
+Base the score on correct answers over the total number of questions.
+Return `correctAnswers`, `totalQuestions`, and a score breakdown with one item per question.
+Do not combine multiple questions into one breakdown item.
+Each breakdown item must include only:
+- `questionNumber`
+- `score`
+- `rationale`
+Each rationale must explain that specific question only.
+
+
+If a response is partly correct, explain how partial credit affected the correct-answer count while still framing the final score as correct answers over total questions.
+When partial credit is used, apply it at the individual-question level and explain it separately for each affected question.
+
+
 When grades are requested, use only literal letter grades A, B, C, D, or E.
 If the performance is borderline, round the holistic grade up to the stronger nearby grade.
 
@@ -180,11 +245,10 @@ If the performance is borderline, round the holistic grade up to the stronger ne
 Include an overall evaluation summary and an overall grade when the schema asks for it.
 
 
-Include category-by-category evaluations for task completion, meaning delivery, structure, vocabulary/expression, and grammar accuracy.
+Include category-by-category evaluations for task completion, content/delivery, organization/structure, vocabulary/expression, and grammatical accuracy.
 Each category summary should explain the judgment in plain language.
 
 
-Feedback is enabled.
 Use a supportive, non-accusatory, growth-oriented tone.
 Apply the 2:1 principle internally: aim for two concrete strengths and one priority improvement theme.
 
@@ -197,6 +261,7 @@ Each category feedback item should be short but actionable.
 
 
 Include category-specific improvement examples when possible.
+Each example must be an example phrase or sentence that demonstrates how to improve.
 Use the diff data and rewritten versions to show how the writing could become clearer or more natural.
 
 
@@ -210,11 +275,9 @@ Keep the number of items small and practical.
 Include a detailed improvements section.
 Return no more than 8 detailed improvement items.
 Each detailed improvement item must include:
-- a short title
 - the original text span
 - the revised text span
 - a rationale connected to a grammar rule, usage rule, or word meaning
-- a practical tip for the student
 
 
 Return only JSON that matches the provided schema.
@@ -224,18 +287,19 @@ Do not emit placeholder nulls, empty arrays, or empty strings for disabled secti
 For enabled sections, populate every field required by the schema.
 Always include `meta` and `improvements`.
 
-Respect these settings:
-- scoring enabled: no
-- partial credit enabled: no
-- evaluation enabled: yes
-- evaluation overall enabled: yes
-- evaluation categories enabled: yes
-- feedback enabled: yes
-- feedback overall enabled: yes
-- feedback categories enabled: yes
-- feedback examples enabled: yes
-- strengths enabled: yes
-- areas to improve enabled: yes
+Active response sections:
+- scoring
+- scoring.partialCreditAllowed: yes
+- evaluation
+- evaluation.overall
+- evaluation.categories
+- feedback
+- feedback.overall
+- feedback.categories
+- feedback.categoryExamples
+- strengths
+- areasToImprove
+- improvements
 
 Set meta.generatedAt to the current ISO timestamp.
 Set meta.promptFiles to the list of prompt files used for this request.

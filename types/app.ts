@@ -43,6 +43,7 @@ export interface FeedbackConfigState {
   includeStrengths: boolean;
   includeAreasToImprove: boolean;
   maxDetailedImprovementItems: number;
+  maxFurtherImprovementItems: number;
 }
 
 export interface WritingInputs {
@@ -96,27 +97,21 @@ export interface ScoringResult {
   scoreBreakdown: ScoreBreakdownItem[];
 }
 
-export interface EvaluationCategory {
+export interface ReviewCategoryEntry {
   key: FeedbackCategory;
-  grade: GradeLetter;
-  summary: string;
+  grade?: GradeLetter;
+  comment: string;
+  exampleCase?: {
+    before: string;
+    after: string;
+    why: string;
+  };
 }
 
-export interface EvaluationResult {
+export interface ReviewResult {
   overallGrade?: GradeLetter | null;
-  overallEvaluation?: string;
-  categories?: EvaluationCategory[];
-}
-
-export interface FeedbackCategoryEntry {
-  key: FeedbackCategory;
-  feedback: string;
-  example?: string;
-}
-
-export interface FeedbackResult {
-  overallFeedback?: string;
-  categories?: FeedbackCategoryEntry[];
+  overallComment?: string;
+  categories?: ReviewCategoryEntry[];
 }
 
 export interface ImprovementItem {
@@ -126,7 +121,6 @@ export interface ImprovementItem {
 }
 
 export interface ImprovementsResult {
-  summary: string;
   detailedItems: ImprovementItem[];
 }
 
@@ -141,11 +135,11 @@ export interface AreasToImproveResult {
 export interface FeedbackResponse {
   meta: OutputMeta;
   scoring?: ScoringResult;
-  evaluation?: EvaluationResult;
-  feedback?: FeedbackResult;
+  review?: ReviewResult;
   strengths?: StrengthsResult;
   areasToImprove?: AreasToImproveResult;
   improvements: ImprovementsResult;
+  furtherImprovements: ImprovementsResult;
 }
 
 export interface ResponseMetrics {

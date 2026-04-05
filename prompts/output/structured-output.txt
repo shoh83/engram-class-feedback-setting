@@ -3,7 +3,7 @@ Only include sections and fields that are enabled by the current settings.
 Do not emit disabled sections.
 Do not emit placeholder nulls, empty arrays, or empty strings for disabled sections or disabled subfields.
 For enabled sections, populate every field required by the schema.
-Always include `meta` and `improvements`.
+Always include `meta`, `improvements`, and `furtherImprovements`.
 
 {{active_sections_summary}}
 

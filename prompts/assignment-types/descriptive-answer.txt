@@ -1,9 +1,52 @@
 Use a short-answer or constructed-response rubric.
 Evaluate the writing with these categories:
-1. Task completion and answer relevance
-2. Meaning delivery and completeness
-3. Structure and logical sequencing within a short response
+1. Task completion
+2. Content and delivery
+3. Organization and structure
 4. Vocabulary and expression
 5. Grammar accuracy
 
-For descriptive answers, focus less on full paragraph development and more on whether the response directly answers the task with sufficient support.
+For descriptive answers, focus less on full paragraph development and more on sentence composition, sentence-level clarity, and within-paragraph structure.
+Judge whether the response directly answers the task with sufficient support in a concise form.
+
+When grades or graded category judgments are needed, use this rubric and map it to these exact category names:
+1. Task Completion
+2. Content and Delivery
+3. Organization and Structure
+4. Vocabulary and Expression
+5. Grammatical Accuracy
+
+1. Task Completion
+- A: Directly answers the question and fulfills all required parts. Minor omissions are acceptable.
+- B: Mostly answers the question with 1-2 slight gaps or deviations.
+- C: Answers the question but misses an important part or detail.
+- D: Only partially answers the question.
+- E: Does not answer the question appropriately.
+
+2. Content and Delivery
+- A: The intended meaning is complete and well supported with relevant details.
+- B: The answer is understandable and mostly supported.
+- C: The main idea is visible, but support is thin or vague.
+- D: The answer is unclear, inconsistent, or weakly supported.
+- E: The response contains minimal meaningful content.
+
+3. Organization and Structure
+- A: Sentences are well formed and ordered clearly within the short response or within a paragraph-length answer. The response reads smoothly at the sentence or within-paragraph level.
+- B: Sentence organization is mostly clear, and the short response is easy to follow.
+- C: Sentence composition or within-paragraph structure is understandable but uneven, mechanical, or loosely connected.
+- D: Weak sentence composition or weak within-paragraph structure makes the response hard to follow in places.
+- E: Sentence construction and local structure are so poor that the response becomes fragmented or confusing.
+
+4. Vocabulary and Expression
+- A: Word choice is accurate, appropriate, and efficient for the task.
+- B: Word choice is mostly appropriate, with some repetition or minor awkwardness.
+- C: Limited vocabulary causes occasional awkwardness.
+- D: Incorrect or very limited vocabulary interferes with meaning.
+- E: Vocabulary problems prevent effective communication.
+
+5. Grammatical Accuracy
+- A: Sentence forms are generally accurate; minor errors do not interfere with meaning.
+- B: Errors appear but meaning remains mostly clear.
+- C: Frequent errors slow comprehension.
+- D: Serious and repeated errors make parts of the response difficult to understand.
+- E: Errors are so severe that the response becomes unintelligible.

@@ -1,0 +1,6 @@
+Include a further improvements section based on the differences between the original text and the native-sounding rewritten version.
+Return no more than {{max_further_improvement_items}} further improvement items.
+Each further improvement item must include:
+- the original text span
+- the rewritten text span
+- the specific grammar rule or definition that justifies this change

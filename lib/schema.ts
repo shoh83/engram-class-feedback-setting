@@ -32,42 +32,35 @@ function scoringSchema() {
   });
 }
 
-function evaluationSchema(config: FeedbackConfigState) {
+function reviewSchema(config: FeedbackConfigState) {
   const shape: Record<string, z.ZodTypeAny> = {};
+  const includeOverall = config.evaluation.includeOverall || config.feedback.includeOverall;
+  const includeCategories = config.evaluation.includeCategories || config.feedback.includeCategoryFeedback;
+
+  if (includeOverall) {
+    shape.overallComment = z.string();
+  }
 
   if (config.evaluation.includeOverall) {
     shape.overallGrade = gradeEnum.nullable();
-    shape.overallEvaluation = z.string();
   }
 
-  if (config.evaluation.includeCategories) {
-    shape.categories = z.array(
-      z.object({
-        key: categoryEnum,
-        grade: gradeEnum,
-        summary: z.string()
-      })
-    );
-  }
-
-  return z.object(shape);
-}
-
-function feedbackSchema(config: FeedbackConfigState) {
-  const shape: Record<string, z.ZodTypeAny> = {};
-
-  if (config.feedback.includeOverall) {
-    shape.overallFeedback = z.string();
-  }
-
-  if (config.feedback.includeCategoryFeedback) {
+  if (includeCategories) {
     const categoryShape: Record<string, z.ZodTypeAny> = {
       key: categoryEnum,
-      feedback: z.string()
+      comment: z.string()
     };
 
+    if (config.evaluation.includeCategories) {
+      categoryShape.grade = gradeEnum;
+    }
+
     if (config.feedback.includeCategoryExamples) {
-      categoryShape.example = z.string();
+      categoryShape.exampleCase = z.object({
+        before: z.string(),
+        after: z.string(),
+        why: z.string()
+      });
     }
 
     shape.categories = z.array(z.object(categoryShape));
@@ -86,7 +79,15 @@ export function buildFeedbackResponseSchema(config: FeedbackConfigState) {
       promptFiles: z.array(z.string())
     }),
     improvements: z.object({
-      summary: z.string(),
+      detailedItems: z.array(
+        z.object({
+          original: z.string(),
+          revised: z.string(),
+          rationale: z.string()
+        })
+      )
+    }),
+    furtherImprovements: z.object({
       detailedItems: z.array(
         z.object({
           original: z.string(),
@@ -101,12 +102,8 @@ export function buildFeedbackResponseSchema(config: FeedbackConfigState) {
     shape.scoring = scoringSchema();
   }
 
-  if (config.evaluation.enabled) {
-    shape.evaluation = evaluationSchema(config);
-  }
-
-  if (config.feedback.enabled) {
-    shape.feedback = feedbackSchema(config);
+  if (config.evaluation.enabled || config.feedback.enabled) {
+    shape.review = reviewSchema(config);
   }
 
   if (config.includeStrengths) {
