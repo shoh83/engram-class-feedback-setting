@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useState, useTransition } from "react";
+import { useEffect, useRef, useState, useTransition } from "react";
 
 import { ConfigForm } from "@/components/ConfigForm";
+import { ConfirmReport } from "@/components/ConfirmReport";
 import { JsonResponsePanel } from "@/components/JsonResponsePanel";
 import { MetricsDisplay } from "@/components/MetricsDisplay";
 import { OutputCards } from "@/components/OutputCards";
@@ -30,6 +31,8 @@ export function DemoApp() {
   const [error, setError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
   const [isSavingPrompt, setIsSavingPrompt] = useState(false);
+  const [confirmedAt, setConfirmedAt] = useState<string | null>(null);
+  const reportRef = useRef<HTMLDivElement | null>(null);
 
   async function loadPromptFiles() {
     const response = await fetch("/api/prompts");
@@ -40,6 +43,17 @@ export function DemoApp() {
   useEffect(() => {
     void loadPromptFiles();
   }, []);
+
+  useEffect(() => {
+    if (!confirmedAt || !reportRef.current) {
+      return;
+    }
+
+    reportRef.current.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
+  }, [confirmedAt]);
 
   function handleGenerate() {
     setError(null);
@@ -128,6 +142,11 @@ export function DemoApp() {
                   setConfig(defaultConfig);
                   setInputs(sampleInputs);
                   setRawResponseJson("");
+                  setResult(null);
+                  setMetrics(null);
+                  setPromptText("");
+                  setUsedFiles([]);
+                  setConfirmedAt(null);
                   setError(null);
                 }}
                 disabled={isPending || isSavingPrompt}
@@ -169,10 +188,34 @@ export function DemoApp() {
               <MetricsDisplay metrics={metrics} />
               <OutputCards result={result} onChange={setResult} />
               <JsonResponsePanel rawResponseJson={rawResponseJson} result={result} />
+              <div className="button-row">
+                <button
+                  className="button-secondary"
+                  type="button"
+                  onClick={() => setConfirmedAt(new Date().toISOString())}
+                  disabled={!result || isPending || isSavingPrompt}
+                >
+                  {confirmedAt ? "Refresh Confirmed Report" : "Confirm"}
+                </button>
+              </div>
             </div>
           </div>
         </section>
       </div>
+      {confirmedAt ? (
+        <div ref={reportRef}>
+          <ConfirmReport
+            config={config}
+            inputs={inputs}
+            promptText={promptText}
+            usedFiles={usedFiles}
+            metrics={metrics}
+            result={result}
+            rawResponseJson={rawResponseJson}
+            confirmedAt={confirmedAt}
+          />
+        </div>
+      ) : null}
     </main>
   );
 }
