@@ -1,5 +1,5 @@
-import { DemoApp } from "@/components/DemoApp";
+import { ClientDemoApp } from "@/components/ClientDemoApp";
 
 export default function Page() {
-  return <DemoApp />;
+  return <ClientDemoApp />;
 }
