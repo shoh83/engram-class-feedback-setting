@@ -26,15 +26,15 @@ Inputs:
 [END_DIFF_DATA]
 
 Interpret worksheet formatting as follows:
-1. Any text wrapped in double asterisks, like **this**, is printed worksheet text. It may be a page title, subtitle, section heading, prompt, instruction, guide, hint, label, sentence starter, question, or template.
-2. Any text not wrapped in double asterisks is the student's response.
+1. Any text wrapped in double square brackets, like [[this]], is printed worksheet text. It may be a page title, subtitle, section heading, prompt, instruction, guide, hint, label, sentence starter, question, or template.
+2. Any text not wrapped in double square brackets is the student's response.
 
 Use worksheet text for task completion, topic relevance, and grading context.
 Base evaluation, grading, praise, and revision advice only on the student's response in connection with that worksheet text.
 
 Follow the topic authority hierarchy:
 1. Use assignment directions first when present.
-2. Otherwise use worksheet text wrapped in double asterisks from the original text.
+2. Otherwise use worksheet text wrapped in double square brackets from the original text.
 3. Only if both are missing, inspect other inline directions or headers in the original text that are clearly not student-written.
 4. Only infer the topic from context if all of the above are missing.
 

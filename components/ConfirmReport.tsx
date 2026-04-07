@@ -101,9 +101,9 @@ export function ConfirmReport({ result, confirmedAt, inputs }: ConfirmReportProp
           <section className="report-section">
             <h3 className="report-heading">채점 결과</h3>
             <div className="report-stack">
-              <div className="report-grade-block">
+              <div className="report-score-summary">
                 <div className="report-label">총점</div>
-                <div className="report-score-display">
+                <div className="report-score-display-text">
                   {result.scoring.correctAnswers ?? "-"} / {result.scoring.totalQuestions ?? "-"}
                 </div>
               </div>
@@ -130,9 +130,9 @@ export function ConfirmReport({ result, confirmedAt, inputs }: ConfirmReportProp
             <h3 className="report-heading">종합 평가</h3>
             <div className="report-hero-card">
               {result.review?.overallGrade ? (
-                <div className="report-grade-block">
+                <div className="report-score-summary">
                   <div className="report-label">종합 등급</div>
-                  <div className="report-grade-display">{result.review.overallGrade}</div>
+                  <div className="report-grade-display-text">{result.review.overallGrade}</div>
                 </div>
               ) : null}
               {result.review?.overallComment ? (
