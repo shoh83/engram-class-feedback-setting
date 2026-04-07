@@ -1,307 +1,234 @@
 "use client";
 
+import { DiffVisual } from "@/components/DiffVisual";
 import { CATEGORY_LABELS } from "@/lib/constants";
-import type { FeedbackConfigState, FeedbackResponse, ResponseMetrics, WritingInputs } from "@/types/app";
+import type { FeedbackResponse, WritingInputs } from "@/types/app";
 
 interface ConfirmReportProps {
-  config: FeedbackConfigState;
-  inputs: WritingInputs;
-  promptText: string;
-  usedFiles: string[];
-  metrics: ResponseMetrics | null;
   result: FeedbackResponse | null;
-  rawResponseJson: string;
   confirmedAt: string;
+  inputs: WritingInputs;
 }
 
-function formatBoolean(value: boolean) {
-  return value ? "Enabled" : "Disabled";
+function ImprovementPair({
+  before,
+  after,
+  description
+}: {
+  before: string;
+  after: string;
+  description: string;
+}) {
+  return (
+    <div className="report-improvement-card">
+      <div className="report-improvement-line">
+        <span className="report-before-text">{before}</span>
+        <span className="report-arrow">-&gt;</span>
+        <span className="report-after-text">{after}</span>
+      </div>
+      <div className="report-description">• {description}</div>
+    </div>
+  );
 }
 
-function formatAssignmentType(value: FeedbackConfigState["assignmentType"]) {
-  return value === "descriptive-answer" ? "Descriptive answer" : "Essay";
-}
+export function ConfirmReport({ result, confirmedAt, inputs }: ConfirmReportProps) {
+  if (!result) {
+    return (
+      <section className="panel report-panel report-shell">
+        <div className="panel-header">
+          <div>
+            <p className="section-title">확정 리포트</p>
+            <h2 className="headline">피드백 결과</h2>
+          </div>
+        </div>
+        <div className="panel-body">
+          <div className="muted-banner">생성된 피드백이 없어 확정 리포트를 표시할 수 없습니다.</div>
+        </div>
+      </section>
+    );
+  }
 
-function formatOutputLanguage(value: FeedbackConfigState["outputLanguage"]) {
-  return value === "korean" ? "Korean" : "English";
-}
-
-function formatSchoolStage(value: FeedbackConfigState["studentLevel"]["schoolStage"]) {
-  return value === "elementary" ? "Elementary" : "Middle";
-}
-
-function formatProficiency(value: FeedbackConfigState["studentLevel"]["proficiency"]) {
-  if (value === "low") return "Low";
-  if (value === "high") return "High";
-  return "Middle";
-}
-
-export function ConfirmReport({
-  config,
-  inputs,
-  promptText,
-  usedFiles,
-  metrics,
-  result,
-  rawResponseJson,
-  confirmedAt
-}: ConfirmReportProps) {
-  const categoryLabels = CATEGORY_LABELS[config.outputLanguage];
+  const categoryLabels = CATEGORY_LABELS.korean;
 
   return (
-    <section className="panel report-panel">
+    <section className="panel report-panel report-shell">
       <div className="panel-header">
-        <div>
-          <p className="section-title">Confirmed Report</p>
-          <h2 className="headline">Submission-ready Snapshot</h2>
-        </div>
-        <div className="chip-list">
-          <span className="chip active">{formatAssignmentType(config.assignmentType)}</span>
-          <span className="chip">{formatOutputLanguage(config.outputLanguage)}</span>
-          <span className="chip">{new Date(confirmedAt).toLocaleString()}</span>
+        <div className="report-header-meta">
+          <div className="report-meta-left">
+          <div className="report-meta-row">
+            <span className="report-meta-label">클래스</span>
+              <strong>
+                {result.meta.studentLevel.schoolStage === "elementary"
+                  ? "초등"
+                  : result.meta.studentLevel.schoolStage === "middle"
+                    ? "중등"
+                    : "고등"}
+              </strong>
+            </div>
+            <div className="report-meta-row">
+              <span className="report-meta-label">학생명</span>
+              <strong>김유정</strong>
+            </div>
+            <div className="report-meta-row">
+              <span className="report-meta-label">작성일</span>
+              <strong>{new Date(confirmedAt).toLocaleDateString("ko-KR")}</strong>
+            </div>
+          </div>
+          <div className="report-header-actions">
+            <div className="report-meta-right">엔그램 영어학원</div>
+            <button type="button" className="button-secondary no-print" onClick={() => window.print()}>
+              Print
+            </button>
+          </div>
         </div>
       </div>
+
       <div className="panel-body report-layout">
-        <div className="report-summary">
-          <div className="report-summary-card report-summary-card-accent">
-            <div className="report-kicker">Student Profile</div>
-            <div className="report-strong">
-              {formatSchoolStage(config.studentLevel.schoolStage)} / {formatProficiency(config.studentLevel.proficiency)}
-            </div>
-            <div className="inline-note">Output language: {formatOutputLanguage(config.outputLanguage)}</div>
+        <section className="report-section report-title-section">
+          <h2 className="headline report-title">과제 리포트</h2>
+          <div className="report-assignment-name">
+            <span className="report-meta-label">과제명</span>
+            <strong>Writing your own report 7/18</strong>
           </div>
-          <div className="report-summary-card">
-            <div className="report-kicker">Evaluation + Feedback</div>
-            <div className="report-strong">
-              {formatBoolean(config.evaluation.enabled)} / {formatBoolean(config.feedback.enabled)}
-            </div>
-            <div className="inline-note">
-              Strengths: {formatBoolean(config.includeStrengths)} | Areas to improve: {formatBoolean(config.includeAreasToImprove)}
-            </div>
-          </div>
-          <div className="report-summary-card">
-            <div className="report-kicker">Generation Status</div>
-            <div className="report-strong">{result ? "Feedback generated" : "Configuration only"}</div>
-            <div className="inline-note">Prompt files used: {usedFiles.length}</div>
-          </div>
-        </div>
+        </section>
 
-        <div className="report-grid">
-          <section className="report-section">
-            <h3 className="report-heading">Configuration</h3>
-            <div className="report-field-grid">
-              <div className="report-field">
-                <span className="report-label">Assignment Type</span>
-                <strong>{formatAssignmentType(config.assignmentType)}</strong>
-              </div>
-              <div className="report-field">
-                <span className="report-label">Output Language</span>
-                <strong>{formatOutputLanguage(config.outputLanguage)}</strong>
-              </div>
-              <div className="report-field">
-                <span className="report-label">School Stage</span>
-                <strong>{formatSchoolStage(config.studentLevel.schoolStage)}</strong>
-              </div>
-              <div className="report-field">
-                <span className="report-label">Proficiency</span>
-                <strong>{formatProficiency(config.studentLevel.proficiency)}</strong>
-              </div>
-              <div className="report-field">
-                <span className="report-label">Evaluation</span>
-                <strong>{formatBoolean(config.evaluation.enabled)}</strong>
-              </div>
-              <div className="report-field">
-                <span className="report-label">Feedback</span>
-                <strong>{formatBoolean(config.feedback.enabled)}</strong>
-              </div>
-              <div className="report-field">
-                <span className="report-label">Detailed Improvement Limit</span>
-                <strong>{config.maxDetailedImprovementItems}</strong>
-              </div>
-              <div className="report-field">
-                <span className="report-label">Further Improvement Limit</span>
-                <strong>{config.maxFurtherImprovementItems}</strong>
-              </div>
-            </div>
-          </section>
+        <section className="report-section">
+          <h3 className="report-heading">원문과 수정본 비교</h3>
+          <DiffVisual before={inputs.originalText} after={inputs.minimallyCorrectedText} />
+        </section>
 
+        {result.scoring ? (
           <section className="report-section">
-            <h3 className="report-heading">Writing Inputs</h3>
+            <h3 className="report-heading">채점 결과</h3>
             <div className="report-stack">
-              <div className="report-block">
-                <div className="report-label">Assignment / Topic</div>
-                <div>{inputs.assignmentDescription || "No assignment description provided."}</div>
-              </div>
-              <div className="report-block">
-                <div className="report-label">Original Text</div>
-                <div>{inputs.originalText}</div>
-              </div>
-              <div className="report-field-grid">
-                <div className="report-block">
-                  <div className="report-label">Minimally Corrected</div>
-                  <div>{inputs.minimallyCorrectedText}</div>
+              <div className="report-grade-block">
+                <div className="report-label">총점</div>
+                <div className="report-score-display">
+                  {result.scoring.correctAnswers ?? "-"} / {result.scoring.totalQuestions ?? "-"}
                 </div>
-                <div className="report-block">
-                  <div className="report-label">Rewritten Version</div>
-                  <div>{inputs.rewrittenText}</div>
+              </div>
+              <div className="report-overall-comment">
+                <div className="report-label">문항별 채점</div>
+                <div className="report-score-list">
+                  {result.scoring.scoreBreakdown.map((item) => (
+                    <div key={`score-${item.questionNumber}`} className="report-score-item">
+                      <div className="report-score-header">
+                        <strong>{item.questionNumber}번</strong>
+                        <span className="report-score-badge">{item.score}점</span>
+                      </div>
+                      <div className="report-description">• {item.rationale}</div>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
           </section>
+        ) : null}
 
+        {result.review?.overallComment || result.review?.overallGrade ? (
           <section className="report-section">
-            <h3 className="report-heading">Prompt and Runtime</h3>
-            <div className="report-field-grid">
-              <div className="report-block">
-                <div className="report-label">Used Prompt Files</div>
-                <div className="report-chip-list">
-                  {usedFiles.length > 0 ? usedFiles.map((file) => <span key={file} className="report-pill">{file}</span>) : "No prompt files used yet."}
+            <h3 className="report-heading">종합 평가</h3>
+            <div className="report-hero-card">
+              {result.review?.overallGrade ? (
+                <div className="report-grade-block">
+                  <div className="report-label">종합 등급</div>
+                  <div className="report-grade-display">{result.review.overallGrade}</div>
                 </div>
-              </div>
-              <div className="report-block">
-                <div className="report-label">Metrics</div>
-                {metrics ? (
-                  <div className="report-metric-list">
-                    <div className="report-metric">
-                      <span>Processing Time</span>
-                      <strong>{(metrics.processingTimeMs / 1000).toFixed(2)} s</strong>
-                    </div>
-                    <div className="report-metric">
-                      <span>Model</span>
-                      <strong>{metrics.model}</strong>
-                    </div>
-                    <div className="report-metric">
-                      <span>Total Tokens</span>
-                      <strong>{metrics.totalTokens ?? "n/a"}</strong>
-                    </div>
-                  </div>
-                ) : (
-                  <div>No generation metrics yet.</div>
-                )}
-              </div>
-            </div>
-            <div className="report-code-block">
-              <div className="report-label">Composed Prompt</div>
-              <div className="scroll-box code-block">{promptText || "Generate feedback to include the final composed prompt."}</div>
+              ) : null}
+              {result.review?.overallComment ? (
+                <div className="report-overall-comment">
+                  <div className="report-label">종합 코멘트</div>
+                  <p>{result.review.overallComment}</p>
+                </div>
+              ) : null}
             </div>
           </section>
+        ) : null}
 
+        {result.review?.categories?.length ? (
           <section className="report-section">
-            <h3 className="report-heading">Feedback Result</h3>
-            {result ? (
-              <div className="report-stack">
-                <div className="report-highlight-grid">
-                  <div className="report-highlight">
-                    <span className="report-label">Generated At</span>
-                    <strong>{result.meta.generatedAt}</strong>
+            <h3 className="report-heading">영역별 리뷰</h3>
+            <div className="report-category-grid">
+              {result.review.categories.map((category) => (
+                <article key={category.key} className="report-category-card">
+                  <div className="report-category-header">
+                    <h4 className="report-category-title">{categoryLabels[category.key]}</h4>
+                    {category.grade ? <span className="report-grade-badge">{category.grade}</span> : null}
                   </div>
-                  <div className="report-highlight">
-                    <span className="report-label">Prompt File Count</span>
-                    <strong>{result.meta.promptFiles.length}</strong>
-                  </div>
-                  {result.review?.overallGrade ? (
-                    <div className="report-highlight report-highlight-accent">
-                      <span className="report-label">Overall Grade</span>
-                      <strong>{result.review.overallGrade}</strong>
+                  <p className="report-category-comment">{category.comment}</p>
+                  {category.exampleCase ? (
+                    <div className="report-example-box">
+                      <div className="report-label">개선 예시</div>
+                      <ImprovementPair
+                        before={category.exampleCase.before}
+                        after={category.exampleCase.after}
+                        description={category.exampleCase.why}
+                      />
                     </div>
                   ) : null}
-                </div>
-
-                {result.review?.overallComment ? (
-                  <div className="report-block">
-                    <div className="report-label">Overall Comment</div>
-                    <div>{result.review.overallComment}</div>
-                  </div>
-                ) : null}
-
-                {result.review?.categories?.length ? (
-                  <div className="report-stack">
-                    <div className="report-label">Category Review</div>
-                    <div className="report-category-grid">
-                      {result.review.categories.map((category) => (
-                        <div key={category.key} className="report-category-card">
-                          <div className="report-category-header">
-                            <strong>{categoryLabels[category.key]}</strong>
-                            {category.grade ? <span className="report-grade-badge">{category.grade}</span> : null}
-                          </div>
-                          <p>{category.comment}</p>
-                          {category.exampleCase ? (
-                            <div className="report-example-box">
-                              <div><span className="report-label">Before</span> {category.exampleCase.before}</div>
-                              <div><span className="report-label">After</span> {category.exampleCase.after}</div>
-                              <div><span className="report-label">Why</span> {category.exampleCase.why}</div>
-                            </div>
-                          ) : null}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                ) : null}
-
-                {result.strengths?.items?.length ? (
-                  <div className="report-stack">
-                    <div className="report-label">Strengths</div>
-                    <div className="report-list-grid">
-                      {result.strengths.items.map((item, index) => (
-                        <div key={`strength-${index}`} className="report-list-item">{item}</div>
-                      ))}
-                    </div>
-                  </div>
-                ) : null}
-
-                {result.areasToImprove?.items?.length ? (
-                  <div className="report-stack">
-                    <div className="report-label">Areas To Improve</div>
-                    <div className="report-list-grid">
-                      {result.areasToImprove.items.map((item, index) => (
-                        <div key={`improve-${index}`} className="report-list-item report-list-item-warn">{item}</div>
-                      ))}
-                    </div>
-                  </div>
-                ) : null}
-
-                <div className="report-two-column">
-                  <div className="report-stack">
-                    <div className="report-label">Detailed Improvements</div>
-                    {result.improvements.detailedItems.map((item, index) => (
-                      <div key={`detail-${index}`} className="report-improvement-card">
-                        <div><span className="report-label">Original</span> {item.original}</div>
-                        <div><span className="report-label">Revised</span> <strong>{item.revised}</strong></div>
-                        <div><span className="report-label">Rationale</span> {item.rationale}</div>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="report-stack">
-                    <div className="report-label">Further Improvements</div>
-                    {result.furtherImprovements.detailedItems.map((item, index) => (
-                      <div key={`further-${index}`} className="report-improvement-card">
-                        <div><span className="report-label">Original</span> {item.original}</div>
-                        <div><span className="report-label">Revised</span> <strong>{item.revised}</strong></div>
-                        <div><span className="report-label">Rationale</span> {item.rationale}</div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            ) : (
-              <div className="muted-banner">No generated feedback yet. This report currently includes configuration and writing inputs only.</div>
-            )}
-          </section>
-
-          <section className="report-section">
-            <h3 className="report-heading">Raw JSON</h3>
-            <div className="report-field-grid">
-              <div className="report-code-block">
-                <div className="report-label">API Response JSON</div>
-                <div className="scroll-box code-block">{rawResponseJson || "No raw response yet."}</div>
-              </div>
-              <div className="report-code-block">
-                <div className="report-label">Displayed Output JSON</div>
-                <div className="scroll-box code-block">{result ? JSON.stringify(result, null, 2) : "No displayed output yet."}</div>
-              </div>
+                </article>
+              ))}
             </div>
           </section>
-        </div>
+        ) : null}
+
+        {result.strengths?.items?.length ? (
+          <section className="report-section">
+            <h3 className="report-heading">잘한 점</h3>
+            <div className="report-collection-card">
+              {result.strengths.items.map((item, index) => (
+                <div key={`strength-${index}`} className="report-collection-item">
+                  {item}
+                </div>
+              ))}
+            </div>
+          </section>
+        ) : null}
+
+        {result.areasToImprove?.items?.length ? (
+          <section className="report-section">
+            <h3 className="report-heading">보완할 점</h3>
+            <div className="report-collection-card report-collection-card-warn">
+              {result.areasToImprove.items.map((item, index) => (
+                <div key={`improve-${index}`} className="report-collection-item">
+                  {item}
+                </div>
+              ))}
+            </div>
+          </section>
+        ) : null}
+
+        {result.improvements.detailedItems.length ? (
+          <section className="report-section">
+            <h3 className="report-heading">세부 개선 사항</h3>
+            <div className="report-stack">
+              {result.improvements.detailedItems.map((item, index) => (
+                <ImprovementPair
+                  key={`detail-${index}`}
+                  before={item.original}
+                  after={item.revised}
+                  description={item.rationale}
+                />
+              ))}
+            </div>
+          </section>
+        ) : null}
+
+        {result.furtherImprovements.detailedItems.length ? (
+          <section className="report-section">
+            <h3 className="report-heading">추가 개선 사항</h3>
+            <div className="report-stack">
+              {result.furtherImprovements.detailedItems.map((item, index) => (
+                <ImprovementPair
+                  key={`further-${index}`}
+                  before={item.original}
+                  after={item.revised}
+                  description={item.rationale}
+                />
+              ))}
+            </div>
+          </section>
+        ) : null}
       </div>
     </section>
   );

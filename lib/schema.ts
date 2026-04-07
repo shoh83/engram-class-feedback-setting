@@ -3,7 +3,7 @@ import { z } from "zod";
 import type { FeedbackConfigState } from "@/types/app";
 
 const studentLevelSchema = z.object({
-  schoolStage: z.enum(["elementary", "middle"]),
+  schoolStage: z.enum(["elementary", "middle", "high"]),
   proficiency: z.enum(["low", "middle", "high"])
 });
 
@@ -55,7 +55,7 @@ function reviewSchema(config: FeedbackConfigState) {
       categoryShape.grade = gradeEnum;
     }
 
-    if (config.feedback.includeCategoryExamples) {
+    if (config.feedback.includeCategoryFeedback && config.feedback.includeCategoryExamples) {
       categoryShape.exampleCase = z.object({
         before: z.string(),
         after: z.string(),

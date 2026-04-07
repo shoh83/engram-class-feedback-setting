@@ -1,4 +1,4 @@
-export type SchoolStage = "elementary" | "middle";
+export type SchoolStage = "elementary" | "middle" | "high";
 export type Proficiency = "low" | "middle" | "high";
 export type OutputLanguage = "korean" | "english";
 export type AssignmentType = "essay" | "descriptive-answer";

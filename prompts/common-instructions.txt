@@ -5,6 +5,9 @@ Reference data:
 - Assignment type: {{assignment_type}}
 - Assignment / topic directions: {{assignment_description}}
 
+Global tone requirement:
+Supportive, non-accusatory, easy to understand, friendly, and level-appropriate for the student.
+
 Inputs:
 [START_ORIGINAL_TEXT]
 {{original_content}}

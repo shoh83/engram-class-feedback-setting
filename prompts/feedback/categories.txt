@@ -1,2 +1,6 @@
 Include category-specific feedback for each rubric category that is relevant to the selected configuration.
 Each category feedback item should be short but actionable.
+If category evaluation is also enabled, the category `comment` must function as a single combined card:
+- first, make the judgment clear
+- then, give the learner a concrete next step
+Do not split evaluation and feedback into separate statements for the same category.

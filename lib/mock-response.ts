@@ -99,7 +99,7 @@ export function buildMockFeedback(config: FeedbackConfigState, inputs: WritingIn
           entry.grade = (["B", "B", "B", "C", "C"] as const)[index];
         }
 
-        if (config.feedback.includeCategoryExamples) {
+        if (config.feedback.includeCategoryFeedback && config.feedback.includeCategoryExamples) {
           entry.exampleCase =
             key === "grammarAccuracy"
               ? {

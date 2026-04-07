@@ -1,1 +1,3 @@
 Include an overall evaluation summary and an overall grade when the schema asks for it.
+If both evaluation and feedback are enabled, do not write separate overall evaluation text and overall feedback text.
+Instead, produce one integrated `overallComment` that combines judgment and next-step guidance in a single card.

@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, useTransition } from "react";
 
 import { ConfigForm } from "@/components/ConfigForm";
 import { ConfirmReport } from "@/components/ConfirmReport";
+import { DiffVisual } from "@/components/DiffVisual";
 import { JsonResponsePanel } from "@/components/JsonResponsePanel";
 import { MetricsDisplay } from "@/components/MetricsDisplay";
 import { OutputCards } from "@/components/OutputCards";
@@ -33,7 +34,6 @@ export function DemoApp() {
   const [isSavingPrompt, setIsSavingPrompt] = useState(false);
   const [confirmedAt, setConfirmedAt] = useState<string | null>(null);
   const reportRef = useRef<HTMLDivElement | null>(null);
-
   async function loadPromptFiles() {
     const response = await fetch("/api/prompts");
     const data = (await response.json()) as { files: PromptFileRecord[] };
@@ -131,6 +131,10 @@ export function DemoApp() {
             </p>
             <ConfigForm config={config} onChange={setConfig} />
             <TextInputs inputs={inputs} onChange={setInputs} />
+            <div className="stack">
+              <p className="section-title">Original vs Minimally Corrected Diff</p>
+              <DiffVisual before={inputs.originalText} after={inputs.minimallyCorrectedText} />
+            </div>
             <div className="button-row">
               <button className="button-primary" type="button" onClick={handleGenerate} disabled={isPending || isSavingPrompt}>
                 {isPending ? "Generating..." : "Generate Feedback"}
@@ -205,14 +209,9 @@ export function DemoApp() {
       {confirmedAt ? (
         <div ref={reportRef}>
           <ConfirmReport
-            config={config}
-            inputs={inputs}
-            promptText={promptText}
-            usedFiles={usedFiles}
-            metrics={metrics}
             result={result}
-            rawResponseJson={rawResponseJson}
             confirmedAt={confirmedAt}
+            inputs={inputs}
           />
         </div>
       ) : null}

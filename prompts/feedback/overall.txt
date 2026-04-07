@@ -1,1 +1,2 @@
 Include a concise overall feedback field that combines encouragement with a realistic next step.
+If evaluation is also enabled, merge that guidance into the same `overallComment` instead of producing a separate feedback-only summary.

@@ -4,6 +4,9 @@ Do not emit disabled sections.
 Do not emit placeholder nulls, empty arrays, or empty strings for disabled sections or disabled subfields.
 For enabled sections, populate every field required by the schema.
 Always include `meta`, `improvements`, and `furtherImprovements`.
+Treat `review` as a unified review card structure.
+When both evaluation and feedback are enabled for the same scope, merge them into the same `overallComment` or `categories[].comment` field rather than writing them as separate ideas.
+If `categories[].exampleCase` is present, it must directly demonstrate and justify that exact category comment.
 
 {{active_sections_summary}}
 

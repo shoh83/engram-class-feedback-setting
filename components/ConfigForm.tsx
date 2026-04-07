@@ -50,6 +50,7 @@ export function ConfigForm({ config, onChange }: ConfigFormProps) {
           >
             <option value="elementary">Elementary</option>
             <option value="middle">Middle</option>
+            <option value="high">High</option>
           </select>
         </div>
         <div className="field">

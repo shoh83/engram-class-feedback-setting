@@ -25,6 +25,36 @@ function renderTemplate(content: string, values: TemplateValues) {
   return content.replace(/\{\{(.*?)\}\}/g, (_, key) => values[key.trim() as keyof TemplateValues] ?? "");
 }
 
+function getPromptBlockLabel(path: string) {
+  if (path === "prompts/role.txt") return "ROLE";
+  if (path === "prompts/common-instructions.txt") return "GLOBAL_INSTRUCTIONS";
+  if (path.startsWith("prompts/language/")) return "LANGUAGE_RULES";
+  if (path.startsWith("prompts/levels/proficiency-")) return "PROFICIENCY_PROFILE";
+  if (path.startsWith("prompts/levels/")) return "SCHOOL_LEVEL_PROFILE";
+  if (path.startsWith("prompts/assignment-types/")) return "ASSIGNMENT_CONTEXT";
+  if (path === "prompts/scoring/descriptive-answer-scoring.txt") return "SCORING_RULES";
+  if (path === "prompts/scoring/partial-credit.txt") return "PARTIAL_CREDIT_RULES";
+  if (path === "prompts/evaluation/base.txt") return "EVALUATION_RULES";
+  if (path === "prompts/evaluation/overall.txt") return "OVERALL_REVIEW_RULES";
+  if (path === "prompts/evaluation/categories.txt") return "CATEGORY_EVALUATION_RULES";
+  if (path === "prompts/feedback/base.txt") return "FEEDBACK_TONE_RULES";
+  if (path === "prompts/feedback/overall.txt") return "OVERALL_FEEDBACK_RULES";
+  if (path === "prompts/feedback/categories.txt") return "CATEGORY_FEEDBACK_RULES";
+  if (path === "prompts/feedback/examples.txt") return "CATEGORY_EXAMPLE_RULES";
+  if (path === "prompts/feedback/strengths.txt") return "STRENGTHS_RULES";
+  if (path === "prompts/feedback/areas-to-improve.txt") return "IMPROVEMENT_PRIORITY_RULES";
+  if (path === "prompts/output/detailed-improvements.txt") return "DETAILED_IMPROVEMENT_OUTPUT_RULES";
+  if (path === "prompts/output/further-improvements.txt") return "FURTHER_IMPROVEMENT_OUTPUT_RULES";
+  if (path === "prompts/output/structured-output.txt") return "OUTPUT_SCHEMA_RULES";
+
+  return "ADDITIONAL_INSTRUCTIONS";
+}
+
+function formatPromptFragment(path: string, content: string) {
+  const blockLabel = getPromptBlockLabel(path);
+  return [`<${blockLabel}>`, content.trim(), `</${blockLabel}>`].join("\n");
+}
+
 function buildActiveSectionsSummary(config: FeedbackConfigState) {
   const lines = ["Active response sections:"];
 
@@ -54,6 +84,18 @@ function buildActiveSectionsSummary(config: FeedbackConfigState) {
     if (config.feedback.includeCategoryFeedback && config.feedback.includeCategoryExamples) {
       lines.push(`- feedback.categoryExamples`);
     }
+  }
+
+  if (config.evaluation.includeOverall || config.feedback.includeOverall) {
+    lines.push(`- review.overallComment must be a single integrated summary, not separate evaluation and feedback text`);
+  }
+
+  if (config.evaluation.includeCategories || config.feedback.includeCategoryFeedback) {
+    lines.push(`- review.categories[].comment must combine judgment and actionable guidance in one category card`);
+  }
+
+  if (config.feedback.includeCategoryFeedback && config.feedback.includeCategoryExamples) {
+    lines.push(`- review.categories[].exampleCase must directly illustrate and justify that same category comment`);
   }
 
   if (config.includeStrengths) {
@@ -105,7 +147,7 @@ function getPromptSequence(config: FeedbackConfigState) {
     if (config.feedback.includeCategoryFeedback) {
       files.push("prompts/feedback/categories.txt");
     }
-    if (config.feedback.includeCategoryExamples) {
+    if (config.feedback.includeCategoryFeedback && config.feedback.includeCategoryExamples) {
       files.push("prompts/feedback/examples.txt");
     }
   }
@@ -158,7 +200,7 @@ export async function composePrompt(config: FeedbackConfigState, inputs: Writing
     })
   );
 
-  const prompt = renderedFragments.map((fragment) => fragment.content).join("\n\n");
+  const prompt = renderedFragments.map((fragment) => formatPromptFragment(fragment.path, fragment.content)).join("\n\n");
 
   return {
     prompt,
