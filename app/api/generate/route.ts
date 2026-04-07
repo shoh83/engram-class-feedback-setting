@@ -25,6 +25,8 @@ export async function POST(request: Request) {
           processingTimeMs: Date.now() - startedAt,
           inputTokens: null,
           outputTokens: null,
+          reasoningTokens: null,
+          responseTokens: null,
           totalTokens: null,
           usedMock: true,
           model
@@ -68,9 +70,17 @@ export async function POST(request: Request) {
       | {
           input_tokens?: number;
           output_tokens?: number;
+          output_tokens_details?: {
+            reasoning_tokens?: number;
+          };
           total_tokens?: number;
         }
       | undefined;
+
+    const reasoningTokens = usage?.output_tokens_details?.reasoning_tokens ?? null;
+    const outputTokens = usage?.output_tokens ?? null;
+    const responseTokens =
+      outputTokens !== null ? Math.max(0, outputTokens - (reasoningTokens ?? 0)) : null;
 
     const outputText =
       typeof response.output_text === "string"
@@ -85,7 +95,9 @@ export async function POST(request: Request) {
       metrics: {
         processingTimeMs: Date.now() - startedAt,
         inputTokens: usage?.input_tokens ?? null,
-        outputTokens: usage?.output_tokens ?? null,
+        outputTokens,
+        reasoningTokens,
+        responseTokens,
         totalTokens: usage?.total_tokens ?? null,
         usedMock: false,
         model

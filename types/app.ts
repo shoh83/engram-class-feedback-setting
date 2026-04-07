@@ -146,6 +146,8 @@ export interface ResponseMetrics {
   processingTimeMs: number;
   inputTokens: number | null;
   outputTokens: number | null;
+  reasoningTokens: number | null;
+  responseTokens: number | null;
   totalTokens: number | null;
   usedMock: boolean;
   model: string;

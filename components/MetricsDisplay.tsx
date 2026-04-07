@@ -26,12 +26,17 @@ export function MetricsDisplay({ metrics }: { metrics: ResponseMetrics | null })
           <div className="metric-value">{metrics.inputTokens ?? "n/a"}</div>
         </div>
         <div className="metric-card">
+          <div className="metric-label">Reasoning tokens</div>
+          <div className="metric-value">{metrics.reasoningTokens ?? "n/a"}</div>
+        </div>
+        <div className="metric-card">
           <div className="metric-label">Output tokens</div>
-          <div className="metric-value">{metrics.outputTokens ?? "n/a"}</div>
+          <div className="metric-value">{metrics.responseTokens ?? "n/a"}</div>
         </div>
       </div>
       <div className="inline-note">
-        Model: <strong>{metrics.model}</strong>. Total tokens: {metrics.totalTokens ?? "n/a"}.
+        Model: <strong>{metrics.model}</strong>. Total output tokens: {metrics.outputTokens ?? "n/a"}. Total tokens:{" "}
+        {metrics.totalTokens ?? "n/a"}.
       </div>
     </div>
   );
