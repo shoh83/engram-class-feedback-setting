@@ -91,7 +91,8 @@ export function OutputCards({ result, onChange }: OutputCardsProps) {
       {scoring ? (
         <div className="result-card">
           <h3>{ui.scoring}</h3>
-          <div className="card-list">
+        <div className="card-list">
+          <div className="field-grid field-grid-3">
             <LabeledEditor
               label={ui.correctAnswers}
               value={`${scoring.correctAnswers ?? ""} / ${scoring.totalQuestions ?? ""}`}
@@ -108,41 +109,44 @@ export function OutputCards({ result, onChange }: OutputCardsProps) {
               }}
               minHeight={56}
             />
-            {scoring.scoreBreakdown.map((item, index) => (
-              <div key={`${item.questionNumber}-${index}`} className="result-card">
+          </div>
+          {scoring.scoreBreakdown.map((item, index) => (
+            <div key={`${item.questionNumber}-${index}`} className="result-card">
                 <h4>{language === "korean" ? `${item.questionNumber}번` : `Question ${item.questionNumber}`}</h4>
-                <LabeledEditor
-                  label={ui.questionNumber}
-                  value={String(item.questionNumber)}
-                  onChange={(value) => {
-                    const next = [...scoring.scoreBreakdown];
-                    next[index] = { ...item, questionNumber: Number(value) || item.questionNumber };
-                    onChange({
-                      ...result,
-                      scoring: {
-                        ...scoring,
-                        scoreBreakdown: next
-                      }
-                    });
-                  }}
-                  minHeight={56}
-                />
-                <LabeledEditor
-                  label={ui.score}
-                  value={String(item.score)}
-                  onChange={(value) => {
-                    const next = [...scoring.scoreBreakdown];
-                    next[index] = { ...item, score: Number(value) || 0 };
-                    onChange({
-                      ...result,
-                      scoring: {
-                        ...scoring,
-                        scoreBreakdown: next
-                      }
-                    });
-                  }}
-                  minHeight={56}
-                />
+                <div className="field-grid">
+                  <LabeledEditor
+                    label={ui.questionNumber}
+                    value={String(item.questionNumber)}
+                    onChange={(value) => {
+                      const next = [...scoring.scoreBreakdown];
+                      next[index] = { ...item, questionNumber: Number(value) || item.questionNumber };
+                      onChange({
+                        ...result,
+                        scoring: {
+                          ...scoring,
+                          scoreBreakdown: next
+                        }
+                      });
+                    }}
+                    minHeight={56}
+                  />
+                  <LabeledEditor
+                    label={ui.score}
+                    value={String(item.score)}
+                    onChange={(value) => {
+                      const next = [...scoring.scoreBreakdown];
+                      next[index] = { ...item, score: Number(value) || 0 };
+                      onChange({
+                        ...result,
+                        scoring: {
+                          ...scoring,
+                          scoreBreakdown: next
+                        }
+                      });
+                    }}
+                    minHeight={56}
+                  />
+                </div>
                 <LabeledEditor
                   label={ui.rationale}
                   value={item.rationale}
@@ -167,22 +171,24 @@ export function OutputCards({ result, onChange }: OutputCardsProps) {
       {review ? (
         <div className="result-card">
           <h3>{ui.review}</h3>
-          <div className="card-list">
+        <div className="card-list">
             {review.overallGrade ? (
-              <LabeledEditor
-                label={ui.overallGrade}
-                value={review.overallGrade}
-                onChange={(value) =>
-                  onChange({
-                    ...result,
-                    review: {
-                      ...review,
-                      overallGrade: value.toUpperCase().slice(0, 1) as NonNullable<typeof review>["overallGrade"]
-                    }
-                  })
-                }
-                minHeight={56}
-              />
+              <div className="field-grid field-grid-3">
+                <LabeledEditor
+                  label={ui.overallGrade}
+                  value={review.overallGrade}
+                  onChange={(value) =>
+                    onChange({
+                      ...result,
+                      review: {
+                        ...review,
+                        overallGrade: value.toUpperCase().slice(0, 1) as NonNullable<typeof review>["overallGrade"]
+                      }
+                    })
+                  }
+                  minHeight={56}
+                />
+              </div>
             ) : null}
             {typeof review.overallComment === "string" ? (
               <LabeledEditor
@@ -203,25 +209,27 @@ export function OutputCards({ result, onChange }: OutputCardsProps) {
               <div key={category.key} className="result-card">
                 <h4>{categoryLabels[category.key]}</h4>
                 {category.grade ? (
-                  <LabeledEditor
-                    label={ui.categoryGrade}
-                    value={category.grade}
-                    onChange={(value) => {
-                      const next = [...(review.categories ?? [])];
-                      next[index] = {
-                        ...category,
-                        grade: value.toUpperCase().slice(0, 1) as typeof category.grade
-                      };
-                      onChange({
-                        ...result,
-                        review: {
-                          ...review,
-                          categories: next
-                        }
-                      });
-                    }}
-                    minHeight={56}
-                  />
+                  <div className="field-grid field-grid-3">
+                    <LabeledEditor
+                      label={ui.categoryGrade}
+                      value={category.grade}
+                      onChange={(value) => {
+                        const next = [...(review.categories ?? [])];
+                        next[index] = {
+                          ...category,
+                          grade: value.toUpperCase().slice(0, 1) as typeof category.grade
+                        };
+                        onChange({
+                          ...result,
+                          review: {
+                            ...review,
+                            categories: next
+                          }
+                        });
+                      }}
+                      minHeight={56}
+                    />
+                  </div>
                 ) : null}
                 <LabeledEditor
                   label={ui.categoryComment}
@@ -241,48 +249,50 @@ export function OutputCards({ result, onChange }: OutputCardsProps) {
                 {category.exampleCase ? (
                   <div className="result-card">
                     <h4>{ui.categoryExampleSection}</h4>
-                    <LabeledEditor
-                      label={ui.categoryExampleBefore}
-                      value={category.exampleCase.before}
-                      onChange={(value) => {
-                        const next = [...(review.categories ?? [])] as ReviewCategoryEntry[];
-                        next[index] = {
-                          ...category,
-                          exampleCase: {
-                            ...category.exampleCase!,
-                            before: value
-                          }
-                        };
-                        onChange({
-                          ...result,
-                          review: {
-                            ...review,
-                            categories: next
-                          }
-                        });
-                      }}
-                    />
-                    <LabeledEditor
-                      label={ui.categoryExampleAfter}
-                      value={category.exampleCase.after}
-                      onChange={(value) => {
-                        const next = [...(review.categories ?? [])] as ReviewCategoryEntry[];
-                        next[index] = {
-                          ...category,
-                          exampleCase: {
-                            ...category.exampleCase!,
-                            after: value
-                          }
-                        };
-                        onChange({
-                          ...result,
-                          review: {
-                            ...review,
-                            categories: next
-                          }
-                        });
-                      }}
-                    />
+                    <div className="field-grid">
+                      <LabeledEditor
+                        label={ui.categoryExampleBefore}
+                        value={category.exampleCase.before}
+                        onChange={(value) => {
+                          const next = [...(review.categories ?? [])] as ReviewCategoryEntry[];
+                          next[index] = {
+                            ...category,
+                            exampleCase: {
+                              ...category.exampleCase!,
+                              before: value
+                            }
+                          };
+                          onChange({
+                            ...result,
+                            review: {
+                              ...review,
+                              categories: next
+                            }
+                          });
+                        }}
+                      />
+                      <LabeledEditor
+                        label={ui.categoryExampleAfter}
+                        value={category.exampleCase.after}
+                        onChange={(value) => {
+                          const next = [...(review.categories ?? [])] as ReviewCategoryEntry[];
+                          next[index] = {
+                            ...category,
+                            exampleCase: {
+                              ...category.exampleCase!,
+                              after: value
+                            }
+                          };
+                          onChange({
+                            ...result,
+                            review: {
+                              ...review,
+                              categories: next
+                            }
+                          });
+                        }}
+                      />
+                    </div>
                     <LabeledEditor
                       label={ui.categoryExampleWhy}
                       value={category.exampleCase.why}
@@ -367,38 +377,40 @@ export function OutputCards({ result, onChange }: OutputCardsProps) {
         <div className="card-list">
           {result.improvements.detailedItems.map((item, index) => (
             <div key={`${item.original}-${item.revised}-${index}`} className="result-card">
-              <LabeledEditor
-                label={ui.originalTextSpan}
-                value={item.original}
-                onChange={(value) => {
-                  const next = [...result.improvements.detailedItems];
-                  next[index] = { ...item, original: value };
-                  onChange({
-                    ...result,
-                    improvements: {
-                      ...result.improvements,
-                      detailedItems: next
-                    }
-                  });
-                }}
-                minHeight={56}
-              />
-              <LabeledEditor
-                label={ui.revisedTextSpan}
-                value={item.revised}
-                onChange={(value) => {
-                  const next = [...result.improvements.detailedItems];
-                  next[index] = { ...item, revised: value };
-                  onChange({
-                    ...result,
-                    improvements: {
-                      ...result.improvements,
-                      detailedItems: next
-                    }
-                  });
-                }}
-                minHeight={56}
-              />
+              <div className="field-grid">
+                <LabeledEditor
+                  label={ui.originalTextSpan}
+                  value={item.original}
+                  onChange={(value) => {
+                    const next = [...result.improvements.detailedItems];
+                    next[index] = { ...item, original: value };
+                    onChange({
+                      ...result,
+                      improvements: {
+                        ...result.improvements,
+                        detailedItems: next
+                      }
+                    });
+                  }}
+                  minHeight={56}
+                />
+                <LabeledEditor
+                  label={ui.revisedTextSpan}
+                  value={item.revised}
+                  onChange={(value) => {
+                    const next = [...result.improvements.detailedItems];
+                    next[index] = { ...item, revised: value };
+                    onChange({
+                      ...result,
+                      improvements: {
+                        ...result.improvements,
+                        detailedItems: next
+                      }
+                    });
+                  }}
+                  minHeight={56}
+                />
+              </div>
               <LabeledEditor
                 label={ui.rationale}
                 value={item.rationale}
@@ -424,38 +436,40 @@ export function OutputCards({ result, onChange }: OutputCardsProps) {
         <div className="card-list">
           {result.furtherImprovements.detailedItems.map((item, index) => (
             <div key={`${item.original}-${item.revised}-${index}`} className="result-card">
-              <LabeledEditor
-                label={ui.originalTextSpan}
-                value={item.original}
-                onChange={(value) => {
-                  const next = [...result.furtherImprovements.detailedItems];
-                  next[index] = { ...item, original: value };
-                  onChange({
-                    ...result,
-                    furtherImprovements: {
-                      ...result.furtherImprovements,
-                      detailedItems: next
-                    }
-                  });
-                }}
-                minHeight={56}
-              />
-              <LabeledEditor
-                label={ui.revisedTextSpan}
-                value={item.revised}
-                onChange={(value) => {
-                  const next = [...result.furtherImprovements.detailedItems];
-                  next[index] = { ...item, revised: value };
-                  onChange({
-                    ...result,
-                    furtherImprovements: {
-                      ...result.furtherImprovements,
-                      detailedItems: next
-                    }
-                  });
-                }}
-                minHeight={56}
-              />
+              <div className="field-grid">
+                <LabeledEditor
+                  label={ui.originalTextSpan}
+                  value={item.original}
+                  onChange={(value) => {
+                    const next = [...result.furtherImprovements.detailedItems];
+                    next[index] = { ...item, original: value };
+                    onChange({
+                      ...result,
+                      furtherImprovements: {
+                        ...result.furtherImprovements,
+                        detailedItems: next
+                      }
+                    });
+                  }}
+                  minHeight={56}
+                />
+                <LabeledEditor
+                  label={ui.revisedTextSpan}
+                  value={item.revised}
+                  onChange={(value) => {
+                    const next = [...result.furtherImprovements.detailedItems];
+                    next[index] = { ...item, revised: value };
+                    onChange({
+                      ...result,
+                      furtherImprovements: {
+                        ...result.furtherImprovements,
+                        detailedItems: next
+                      }
+                    });
+                  }}
+                  minHeight={56}
+                />
+              </div>
               <LabeledEditor
                 label={ui.rationale}
                 value={item.rationale}

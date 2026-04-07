@@ -284,29 +284,50 @@ button {
 
 .result-grid {
   display: grid;
-  gap: 14px;
+  gap: 10px;
 }
 
 .result-card {
   border: 1px solid var(--border);
-  border-radius: 18px;
+  border-radius: 14px;
   background: var(--panel-strong);
-  padding: 16px;
+  padding: 12px 14px;
 }
 
 .result-card h3,
 .result-card h4 {
-  margin: 0 0 10px;
+  margin: 0 0 8px;
+  line-height: 1.25;
 }
 
 .card-list {
   display: grid;
-  gap: 10px;
+  gap: 8px;
 }
 
 .editable-block {
-  min-height: 78px;
+  min-height: 68px;
   resize: vertical;
+  padding: 10px 12px;
+  line-height: 1.5;
+}
+
+.result-card .result-card {
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: #fffdfa;
+}
+
+.result-card .field {
+  gap: 4px;
+}
+
+.result-card .field label {
+  font-size: 0.8rem;
+}
+
+.result-card .inline-note {
+  font-size: 0.8rem;
 }
 
 .muted-banner,
