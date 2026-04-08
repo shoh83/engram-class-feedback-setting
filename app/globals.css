@@ -848,8 +848,8 @@ button {
 }
 
 .report-after-text {
-  color: #bf4d11;
-  font-weight: 700;
+  color: inherit;
+  font-weight: inherit;
 }
 
 .report-description {
@@ -1006,8 +1006,7 @@ button {
   }
 
   .report-meta-right,
-  .report-arrow,
-  .report-after-text {
+  .report-arrow {
     color: #bf4d11 !important;
   }
 

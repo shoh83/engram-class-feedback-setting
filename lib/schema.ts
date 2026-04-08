@@ -56,11 +56,13 @@ function reviewSchema(config: FeedbackConfigState) {
     }
 
     if (config.feedback.includeCategoryFeedback && config.feedback.includeCategoryExamples) {
-      categoryShape.exampleCase = z.object({
-        before: z.string(),
-        after: z.string(),
-        why: z.string()
-      });
+      categoryShape.exampleCase = z
+        .object({
+          original: z.string(),
+          revised: z.string(),
+          why: z.string()
+        })
+        .optional();
     }
 
     shape.categories = z.array(z.object(categoryShape));
@@ -150,6 +152,10 @@ function unwrapSchema(schema: z.ZodTypeAny): Record<string, unknown> {
         type: Array.isArray(innerType) ? [...innerType, "null"] : [innerType, "null"]
       };
     }
+  }
+
+  if (schema instanceof z.ZodOptional) {
+    return unwrapSchema(schema.unwrap());
   }
 
   if (schema instanceof z.ZodEnum) {

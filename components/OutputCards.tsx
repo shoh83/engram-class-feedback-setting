@@ -251,15 +251,15 @@ export function OutputCards({ result, onChange }: OutputCardsProps) {
                     <h4>{ui.categoryExampleSection}</h4>
                     <div className="field-grid">
                       <LabeledEditor
-                        label={ui.categoryExampleBefore}
-                        value={category.exampleCase.before}
+                        label={ui.categoryExampleOriginal}
+                        value={category.exampleCase.original}
                         onChange={(value) => {
                           const next = [...(review.categories ?? [])] as ReviewCategoryEntry[];
                           next[index] = {
                             ...category,
                             exampleCase: {
                               ...category.exampleCase!,
-                              before: value
+                              original: value
                             }
                           };
                           onChange({
@@ -272,15 +272,15 @@ export function OutputCards({ result, onChange }: OutputCardsProps) {
                         }}
                       />
                       <LabeledEditor
-                        label={ui.categoryExampleAfter}
-                        value={category.exampleCase.after}
+                        label={ui.categoryExampleRevised}
+                        value={category.exampleCase.revised}
                         onChange={(value) => {
                           const next = [...(review.categories ?? [])] as ReviewCategoryEntry[];
                           next[index] = {
                             ...category,
                             exampleCase: {
                               ...category.exampleCase!,
-                              after: value
+                              revised: value
                             }
                           };
                           onChange({

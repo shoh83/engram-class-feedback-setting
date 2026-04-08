@@ -29,6 +29,7 @@ export const defaultConfig: FeedbackConfigState = {
 };
 
 export const sampleInputs: WritingInputs = {
+  assignmentTitle: "Writing your own report 7/18",
   assignmentDescription:
     "Write a short paragraph about a weekend activity you enjoy and explain why it is meaningful to you.",
   originalText:

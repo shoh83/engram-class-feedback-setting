@@ -35,8 +35,8 @@ export const UI_LABELS: Record<
     categoryGrade: string;
     categoryComment: string;
     categoryExampleSection: string;
-    categoryExampleBefore: string;
-    categoryExampleAfter: string;
+    categoryExampleOriginal: string;
+    categoryExampleRevised: string;
     categoryExampleWhy: string;
     strengths: string;
     areasToImprove: string;
@@ -68,8 +68,8 @@ export const UI_LABELS: Record<
     categoryGrade: "Grade",
     categoryComment: "Comment",
     categoryExampleSection: "Example",
-    categoryExampleBefore: "Before",
-    categoryExampleAfter: "After",
+    categoryExampleOriginal: "Original",
+    categoryExampleRevised: "Revised",
     categoryExampleWhy: "Explanation",
     strengths: "Strengths",
     areasToImprove: "Areas To Improve",
@@ -101,8 +101,8 @@ export const UI_LABELS: Record<
     categoryGrade: "등급",
     categoryComment: "코멘트",
     categoryExampleSection: "개선 예시",
-    categoryExampleBefore: "수정 전",
-    categoryExampleAfter: "수정 후",
+    categoryExampleOriginal: "원문 표현",
+    categoryExampleRevised: "수정 표현",
     categoryExampleWhy: "설명",
     strengths: "잘한 점",
     areasToImprove: "보완할 점",

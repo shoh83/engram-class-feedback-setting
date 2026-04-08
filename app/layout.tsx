@@ -3,8 +3,8 @@ import type { Metadata } from "next";
 import { ReactNode } from "react";
 
 export const metadata: Metadata = {
-  title: "EFL Writing Feedback Demo",
-  description: "Local-only Next.js demo for Korean EFL writing feedback configuration."
+  title: "엔그램 클래스",
+  description: "엔그램 클래스 한국어 EFL writing feedback demo."
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {

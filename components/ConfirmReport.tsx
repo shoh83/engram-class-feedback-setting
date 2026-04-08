@@ -1,5 +1,7 @@
 "use client";
 
+import * as Diff from "diff";
+
 import { DiffVisual } from "@/components/DiffVisual";
 import { CATEGORY_LABELS } from "@/lib/constants";
 import type { FeedbackResponse, WritingInputs } from "@/types/app";
@@ -19,12 +21,51 @@ function ImprovementPair({
   after: string;
   description: string;
 }) {
+  const diffWordsWithSpace = (Diff as typeof Diff & {
+    diffWordsWithSpace?: (
+      oldText: string,
+      newText: string
+    ) => ReturnType<typeof Diff.diffWords>;
+  }).diffWordsWithSpace;
+
+  const parts = (diffWordsWithSpace ?? Diff.diffWords)(before, after);
+
   return (
     <div className="report-improvement-card">
       <div className="report-improvement-line">
-        <span className="report-before-text">{before}</span>
+        <span className="report-before-text">
+          {parts.map((part, index) => {
+            if (part.added) {
+              return null;
+            }
+
+            const className = part.removed
+              ? "diff-token diff-token-remove"
+              : "diff-token";
+
+            return (
+              <span key={`before-${index}-${part.value}`} className={className}>
+                {part.value}
+              </span>
+            );
+          })}
+        </span>
         <span className="report-arrow">-&gt;</span>
-        <span className="report-after-text">{after}</span>
+        <span className="report-after-text">
+          {parts.map((part, index) => {
+            if (part.removed) {
+              return null;
+            }
+
+            const className = part.added ? "diff-token diff-token-add" : "diff-token";
+
+            return (
+              <span key={`after-${index}-${part.value}`} className={className}>
+                {part.value}
+              </span>
+            );
+          })}
+        </span>
       </div>
       <div className="report-description">• {description}</div>
     </div>
@@ -88,7 +129,7 @@ export function ConfirmReport({ result, confirmedAt, inputs }: ConfirmReportProp
           <h2 className="headline report-title">과제 리포트</h2>
           <div className="report-assignment-name">
             <span className="report-meta-label">과제명</span>
-            <strong>Writing your own report 7/18</strong>
+            <strong>{inputs.assignmentTitle || "-"}</strong>
           </div>
         </section>
 
@@ -160,8 +201,8 @@ export function ConfirmReport({ result, confirmedAt, inputs }: ConfirmReportProp
                     <div className="report-example-box">
                       <div className="report-label">개선 예시</div>
                       <ImprovementPair
-                        before={category.exampleCase.before}
-                        after={category.exampleCase.after}
+                        before={category.exampleCase.original}
+                        after={category.exampleCase.revised}
                         description={category.exampleCase.why}
                       />
                     </div>

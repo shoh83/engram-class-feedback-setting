@@ -41,6 +41,10 @@ export function DemoApp() {
   }
 
   useEffect(() => {
+    document.title = "엔그램 클래스";
+  }, []);
+
+  useEffect(() => {
     void loadPromptFiles();
   }, []);
 
@@ -117,7 +121,7 @@ export function DemoApp() {
           <div className="panel-header">
             <div>
               <p className="section-title">Configuration</p>
-              <h1 className="headline">Writing Feedback Demo</h1>
+              <h1 className="headline">엔그램 클래스</h1>
             </div>
             <div className="chip-list">
               <span className="chip active">Local Only</span>

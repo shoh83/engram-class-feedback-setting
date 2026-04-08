@@ -1,5 +1,8 @@
 Include a detailed improvements section.
 Return no more than {{max_detailed_improvement_items}} detailed improvement items.
+Base every detailed improvement item on the provided `ORIGINAL_TO_MINIMALLY_CORRECTED` edit snippets.
+Each item should map to a concrete edit snippet, or a single merged issue clearly supported by one snippet.
+Use the snippet text itself for the original and revised spans instead of inventing broader passages.
 Each detailed improvement item must include:
 - the original text span
 - the revised text span

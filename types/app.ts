@@ -47,6 +47,7 @@ export interface FeedbackConfigState {
 }
 
 export interface WritingInputs {
+  assignmentTitle: string;
   assignmentDescription: string;
   originalText: string;
   minimallyCorrectedText: string;
@@ -63,17 +64,29 @@ export interface PromptPreviewData {
   diffPayload: DiffPayload;
 }
 
-export interface DiffChange {
-  kind: "replace" | "insert" | "delete";
-  from: string;
-  to: string;
-  note: string;
+export interface DiffRange {
+  start: number;
+  end: number;
+}
+
+export interface EditSnippet {
+  id: number;
+  before: string;
+  after: string;
+  originalRange: DiffRange;
+  revisedRange: DiffRange;
+  contextStart: number;
+  revisedContextStart: number;
+}
+
+export interface DiffSnippetSet {
+  text: string;
+  snippets: EditSnippet[];
 }
 
 export interface DiffPayload {
-  originalToCorrected: string;
-  originalToRewritten: string;
-  changes: DiffChange[];
+  originalToCorrected: DiffSnippetSet;
+  originalToRewritten: DiffSnippetSet;
 }
 
 export interface OutputMeta {
@@ -102,8 +115,8 @@ export interface ReviewCategoryEntry {
   grade?: GradeLetter;
   comment: string;
   exampleCase?: {
-    before: string;
-    after: string;
+    original: string;
+    revised: string;
     why: string;
   };
 }

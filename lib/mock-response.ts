@@ -83,8 +83,8 @@ export function buildMockFeedback(config: FeedbackConfigState, inputs: WritingIn
           grade?: "A" | "B" | "C" | "D" | "E";
           comment: string;
           exampleCase?: {
-            before: string;
-            after: string;
+            original: string;
+            revised: string;
             why: string;
           };
         } = {
@@ -103,13 +103,13 @@ export function buildMockFeedback(config: FeedbackConfigState, inputs: WritingIn
           entry.exampleCase =
             key === "grammarAccuracy"
               ? {
-                  before: "it make me happy",
-                  after: "it makes me happy",
+                  original: "it make me happy",
+                  revised: "it makes me happy",
                   why: "This supports the grammar feedback because third-person singular subjects need a verb ending in -s in the simple present."
                 }
               : {
-                  before: "we playing soccer and eat kimbap",
-                  after: "We play soccer and eat kimbap after the game.",
+                  original: "we playing soccer and eat kimbap",
+                  revised: "We play soccer and eat kimbap after the game.",
                   why: "This supports the feedback by showing a clearer and more natural sentence pattern with stronger local flow."
                 };
         }

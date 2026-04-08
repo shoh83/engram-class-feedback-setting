@@ -95,7 +95,8 @@ function buildActiveSectionsSummary(config: FeedbackConfigState) {
   }
 
   if (config.feedback.includeCategoryFeedback && config.feedback.includeCategoryExamples) {
-    lines.push(`- review.categories[].exampleCase must directly illustrate and justify that same category comment`);
+    lines.push(`- review.categories[].exampleCase is optional and should be included only when it materially strengthens that category comment`);
+    lines.push(`- if review.categories[].exampleCase is included, it must be chosen from a provided edit snippet; if no relevant snippet supports the category comment, omit it`);
   }
 
   if (config.includeStrengths) {
@@ -176,9 +177,9 @@ export async function composePrompt(config: FeedbackConfigState, inputs: Writing
     original_content: inputs.originalText,
     proofread_content: inputs.minimallyCorrectedText,
     rewritten_content: inputs.rewrittenText,
-    differences: `${diffPayload.originalToCorrected}\n\n${diffPayload.originalToRewritten}`,
-    original_to_corrected_diff: diffPayload.originalToCorrected,
-    original_to_rewritten_diff: diffPayload.originalToRewritten,
+    differences: `${diffPayload.originalToCorrected.text}\n\n${diffPayload.originalToRewritten.text}`,
+    original_to_corrected_diff: diffPayload.originalToCorrected.text,
+    original_to_rewritten_diff: diffPayload.originalToRewritten.text,
     target_language: config.outputLanguage,
     target_level: config.studentLevel.schoolStage,
     target_proficiency: config.studentLevel.proficiency,

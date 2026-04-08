@@ -16,6 +16,15 @@ export function TextInputs({ inputs, onChange }: TextInputsProps) {
     <div className="stack">
       <p className="section-title">Writing Inputs</p>
       <div className="field">
+        <label htmlFor="assignmentTitle">Assignment title</label>
+        <input
+          id="assignmentTitle"
+          className="control"
+          value={inputs.assignmentTitle ?? ""}
+          onChange={(event) => update("assignmentTitle", event.target.value)}
+        />
+      </div>
+      <div className="field">
         <label htmlFor="assignmentDescription">Assignment / topic description (optional)</label>
         <textarea
           id="assignmentDescription"
