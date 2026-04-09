@@ -106,7 +106,7 @@ export const UI_LABELS: Record<
     categoryExampleWhy: "설명",
     strengths: "잘한 점",
     areasToImprove: "보완할 점",
-    detailedImprovements: "세부 개선 사항",
+    detailedImprovements: "기본 개선 사항",
     furtherImprovements: "추가 개선 사항",
     summary: "요약",
     originalTextSpan: "원문 표현",

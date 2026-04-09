@@ -382,6 +382,16 @@ button {
   color: #991b1b;
 }
 
+.diff-legend-chip-further-add {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.diff-legend-chip-further-remove {
+  background: #e5e7eb;
+  color: #4b5563;
+}
+
 .diff-counts {
   color: var(--muted);
   font-size: 0.95rem;
@@ -412,6 +422,17 @@ button {
 .diff-token-remove {
   background: #fee2e2;
   color: #991b1b;
+  text-decoration: line-through;
+}
+
+.diff-token-further-add {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.diff-token-further-remove {
+  background: #e5e7eb;
+  color: #4b5563;
   text-decoration: line-through;
 }
 
@@ -457,6 +478,27 @@ button {
   gap: 10px;
   align-items: baseline;
   font-size: 1rem;
+}
+
+.report-subsection {
+  display: grid;
+  gap: 10px;
+}
+
+.report-subheading {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #8a4b2c;
+}
+
+.report-subheading-further {
+  color: #8a4b2c;
+}
+
+.report-improvement-card-further {
+  border-color: #bfdbfe;
+  background: linear-gradient(180deg, rgba(239, 246, 255, 0.9), rgba(255, 255, 255, 0.98));
 }
 
 .report-meta-label {
@@ -1002,6 +1044,20 @@ button {
   .diff-token-remove {
     background: #fee2e2 !important;
     color: #991b1b !important;
+    box-shadow: none !important;
+  }
+
+  .diff-legend-chip-further-add,
+  .diff-token-further-add {
+    background: #dbeafe !important;
+    color: #1d4ed8 !important;
+    box-shadow: none !important;
+  }
+
+  .diff-legend-chip-further-remove,
+  .diff-token-further-remove {
+    background: #e5e7eb !important;
+    color: #4b5563 !important;
     box-shadow: none !important;
   }
 

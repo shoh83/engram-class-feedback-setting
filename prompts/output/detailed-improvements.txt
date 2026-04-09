@@ -3,6 +3,7 @@ Return no more than {{max_detailed_improvement_items}} detailed improvement item
 Base every detailed improvement item on the provided `ORIGINAL_TO_MINIMALLY_CORRECTED` edit snippets.
 Each item should map to a concrete edit snippet, or a single merged issue clearly supported by one snippet.
 Use the snippet text itself for the original and revised spans instead of inventing broader passages.
+This section is displayed as `기본 개선 사항`, and its comparison subsection is displayed as `기본 첨삭`.
 Each detailed improvement item must include:
 - the original text span
 - the revised text span

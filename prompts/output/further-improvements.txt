@@ -3,6 +3,7 @@ Return no more than {{max_further_improvement_items}} further improvement items.
 Base every further improvement item on the provided `ORIGINAL_TO_REWRITTEN` edit snippets.
 Each item should map to a concrete edit snippet, or a single merged issue clearly supported by one snippet.
 Use the snippet text itself for the original and revised spans instead of inventing broader passages.
+This section is displayed as `추가 개선 사항`, and its comparison subsection is displayed as `추가 개선`.
 Do not repeat any issue that is already covered in detailed improvements.
 Further improvements must focus on fluency, naturalness, cohesion, style, register, or sentence variety.
 If a change is mainly a basic grammar correction that already appears in the minimally corrected version, do not include it again here.

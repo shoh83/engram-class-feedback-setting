@@ -15,11 +15,13 @@ interface ConfirmReportProps {
 function ImprovementPair({
   before,
   after,
-  description
+  description,
+  variant = "default"
 }: {
   before: string;
   after: string;
   description: string;
+  variant?: "default" | "further";
 }) {
   const diffWordsWithSpace = (Diff as typeof Diff & {
     diffWordsWithSpace?: (
@@ -29,9 +31,10 @@ function ImprovementPair({
   }).diffWordsWithSpace;
 
   const parts = (diffWordsWithSpace ?? Diff.diffWords)(before, after);
+  const isFurther = variant === "further";
 
   return (
-    <div className="report-improvement-card">
+    <div className={`report-improvement-card ${isFurther ? "report-improvement-card-further" : ""}`}>
       <div className="report-improvement-line">
         <span className="report-before-text">
           {parts.map((part, index) => {
@@ -40,7 +43,7 @@ function ImprovementPair({
             }
 
             const className = part.removed
-              ? "diff-token diff-token-remove"
+              ? `diff-token ${isFurther ? "diff-token-further-remove" : "diff-token-remove"}`
               : "diff-token";
 
             return (
@@ -57,7 +60,9 @@ function ImprovementPair({
               return null;
             }
 
-            const className = part.added ? "diff-token diff-token-add" : "diff-token";
+            const className = part.added
+              ? `diff-token ${isFurther ? "diff-token-further-add" : "diff-token-add"}`
+              : "diff-token";
 
             return (
               <span key={`after-${index}-${part.value}`} className={className}>
@@ -131,11 +136,6 @@ export function ConfirmReport({ result, confirmedAt, inputs }: ConfirmReportProp
             <span className="report-meta-label">과제명</span>
             <strong>{inputs.assignmentTitle || "-"}</strong>
           </div>
-        </section>
-
-        <section className="report-section">
-          <h3 className="report-heading">원문과 수정본 비교</h3>
-          <DiffVisual before={inputs.originalText} after={inputs.minimallyCorrectedText} />
         </section>
 
         {result.scoring ? (
@@ -241,8 +241,12 @@ export function ConfirmReport({ result, confirmedAt, inputs }: ConfirmReportProp
 
         {result.improvements.detailedItems.length ? (
           <section className="report-section">
-            <h3 className="report-heading">세부 개선 사항</h3>
+            <h3 className="report-heading">기본 개선 사항</h3>
             <div className="report-stack">
+              <div className="report-subsection">
+                <h4 className="report-subheading">기본 첨삭</h4>
+                <DiffVisual before={inputs.originalText} after={inputs.minimallyCorrectedText} />
+              </div>
               {result.improvements.detailedItems.map((item, index) => (
                 <ImprovementPair
                   key={`detail-${index}`}
@@ -256,15 +260,20 @@ export function ConfirmReport({ result, confirmedAt, inputs }: ConfirmReportProp
         ) : null}
 
         {result.furtherImprovements.detailedItems.length ? (
-          <section className="report-section">
+          <section className="report-section report-section-further">
             <h3 className="report-heading">추가 개선 사항</h3>
             <div className="report-stack">
+              <div className="report-subsection">
+                <h4 className="report-subheading report-subheading-further">추가 개선</h4>
+                <DiffVisual before={inputs.originalText} after={inputs.rewrittenText} variant="further" />
+              </div>
               {result.furtherImprovements.detailedItems.map((item, index) => (
                 <ImprovementPair
                   key={`further-${index}`}
                   before={item.original}
                   after={item.revised}
                   description={item.rationale}
+                  variant="further"
                 />
               ))}
             </div>
