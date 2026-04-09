@@ -330,6 +330,66 @@ button {
   font-size: 0.8rem;
 }
 
+.review-summary {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: linear-gradient(180deg, rgba(248, 244, 237, 0.9), rgba(255, 255, 255, 0.96));
+  padding: 12px 14px 14px;
+  display: grid;
+  gap: 10px;
+}
+
+.review-summary-header h4 {
+  margin: 0;
+}
+
+.review-summary-body {
+  display: flex;
+  justify-content: center;
+}
+
+.radar-chart-shell {
+  width: 100%;
+  max-width: 320px;
+  margin: 0 auto;
+}
+
+.radar-chart {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.radar-ring,
+.radar-axis {
+  fill: none;
+  stroke: rgba(148, 163, 184, 0.45);
+  stroke-width: 1.25;
+}
+
+.radar-area {
+  fill: rgba(249, 115, 22, 0.12);
+  stroke: none;
+}
+
+.radar-outline {
+  fill: none;
+  stroke: #f97316;
+  stroke-width: 3;
+  stroke-linejoin: round;
+}
+
+.radar-point {
+  fill: #f97316;
+}
+
+.radar-label {
+  fill: #667085;
+  font-size: 12px;
+  font-weight: 700;
+}
+
 .muted-banner,
 .error-banner {
   border-radius: 14px;

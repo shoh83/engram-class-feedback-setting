@@ -3,6 +3,7 @@
 import * as Diff from "diff";
 
 import { DiffVisual } from "@/components/DiffVisual";
+import { ReviewSummary } from "@/components/ReviewSummary";
 import { CATEGORY_LABELS } from "@/lib/constants";
 import type { FeedbackResponse, WritingInputs } from "@/types/app";
 
@@ -188,7 +189,8 @@ export function ConfirmReport({ result, confirmedAt, inputs }: ConfirmReportProp
 
         {result.review?.categories?.length ? (
           <section className="report-section">
-            <h3 className="report-heading">영역별 리뷰</h3>
+            <h3 className="report-heading">영역별 평가</h3>
+            <ReviewSummary categories={result.review.categories} language="korean" />
             <div className="report-category-grid">
               {result.review.categories.map((category) => (
                 <article key={category.key} className="report-category-card">

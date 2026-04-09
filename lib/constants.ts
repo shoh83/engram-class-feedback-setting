@@ -30,6 +30,7 @@ export const UI_LABELS: Record<
     score: string;
     rationale: string;
     review: string;
+    categoryOverview: string;
     overallGrade: string;
     overallComment: string;
     categoryGrade: string;
@@ -63,6 +64,7 @@ export const UI_LABELS: Record<
     score: "Score",
     rationale: "Rationale",
     review: "Review",
+    categoryOverview: "Category Review Summary",
     overallGrade: "Overall Grade",
     overallComment: "Overall Comment",
     categoryGrade: "Grade",
@@ -96,6 +98,7 @@ export const UI_LABELS: Record<
     score: "점수",
     rationale: "근거",
     review: "평가 및 피드백",
+    categoryOverview: "영역별 평가 요약",
     overallGrade: "종합 등급",
     overallComment: "종합 코멘트",
     categoryGrade: "등급",
