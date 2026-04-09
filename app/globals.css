@@ -383,8 +383,8 @@ button {
 }
 
 .diff-legend-chip-further-add {
-  background: #dbeafe;
-  color: #1d4ed8;
+  background: #ede9fe;
+  color: #7c3aed;
 }
 
 .diff-legend-chip-further-remove {
@@ -426,8 +426,8 @@ button {
 }
 
 .diff-token-further-add {
-  background: #dbeafe;
-  color: #1d4ed8;
+  background: #ede9fe;
+  color: #7c3aed;
 }
 
 .diff-token-further-remove {
@@ -497,8 +497,8 @@ button {
 }
 
 .report-improvement-card-further {
-  border-color: #bfdbfe;
-  background: linear-gradient(180deg, rgba(239, 246, 255, 0.9), rgba(255, 255, 255, 0.98));
+  border-color: #ddd6fe;
+  background: linear-gradient(180deg, rgba(245, 243, 255, 0.9), rgba(255, 255, 255, 0.98));
 }
 
 .report-meta-label {
@@ -894,6 +894,26 @@ button {
   font-weight: inherit;
 }
 
+.report-diff-inline-remove {
+  color: #991b1b;
+  font-weight: 700;
+}
+
+.report-diff-inline-add {
+  color: #166534;
+  font-weight: 700;
+}
+
+.report-diff-inline-further-remove {
+  color: #6b7280;
+  font-weight: 700;
+}
+
+.report-diff-inline-further-add {
+  color: #7c3aed;
+  font-weight: 700;
+}
+
 .report-description {
   color: #4b3e34;
   line-height: 1.65;
@@ -1049,8 +1069,8 @@ button {
 
   .diff-legend-chip-further-add,
   .diff-token-further-add {
-    background: #dbeafe !important;
-    color: #1d4ed8 !important;
+    background: #ede9fe !important;
+    color: #7c3aed !important;
     box-shadow: none !important;
   }
 

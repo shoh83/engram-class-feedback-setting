@@ -1,2 +1,6 @@
 When grades are requested, use only literal letter grades A, B, C, D, or E.
+Adjust the grading bar according to the provided school stage and proficiency level.
+Be more generous for lower-level younger learners, especially elementary school students with low proficiency.
+Be somewhat stricter for more advanced learners, especially middle school students with high proficiency.
+Judge growth expectations relative to the student's level, not by a single fixed standard for all students.
 If the performance is borderline, round the holistic grade up to the stronger nearby grade.

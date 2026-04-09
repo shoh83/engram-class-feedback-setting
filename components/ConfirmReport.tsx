@@ -43,8 +43,8 @@ function ImprovementPair({
             }
 
             const className = part.removed
-              ? `diff-token ${isFurther ? "diff-token-further-remove" : "diff-token-remove"}`
-              : "diff-token";
+              ? `report-diff-inline ${isFurther ? "report-diff-inline-further-remove" : "report-diff-inline-remove"}`
+              : "";
 
             return (
               <span key={`before-${index}-${part.value}`} className={className}>
@@ -61,8 +61,8 @@ function ImprovementPair({
             }
 
             const className = part.added
-              ? `diff-token ${isFurther ? "diff-token-further-add" : "diff-token-add"}`
-              : "diff-token";
+              ? `report-diff-inline ${isFurther ? "report-diff-inline-further-add" : "report-diff-inline-add"}`
+              : "";
 
             return (
               <span key={`after-${index}-${part.value}`} className={className}>

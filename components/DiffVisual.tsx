@@ -13,7 +13,7 @@ export function DiffVisual({ before, after, variant = "default" }: DiffVisualPro
   const additions = parts.filter((part) => part.added).length;
   const removals = parts.filter((part) => part.removed).length;
   const isFurther = variant === "further";
-  const addLabel = isFurther ? "파랑 = 추가" : "초록 = 추가";
+  const addLabel = isFurther ? "보라색 = 추가" : "초록 = 추가";
   const removeLabel = isFurther ? "연회색 = 삭제" : "빨강 = 삭제";
 
   return (
