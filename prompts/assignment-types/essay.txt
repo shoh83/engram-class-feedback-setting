@@ -1,20 +1,14 @@
 Use an essay or paragraph-based rubric.
-Evaluate the writing with these categories:
-1. Task completion
-2. Content and delivery
-3. Organization and structure
-4. Vocabulary and expression
-5. Grammar accuracy
-
-For essay writing, judge whether ideas develop across sentences into a coherent paragraph or multi-paragraph response.
-Pay attention to paragraph structure, sentence-to-sentence reasoning, and how supporting details build the main point.
-
-When grades or graded category judgments are needed, use this rubric and map it to these exact category names:
+Use these exact rubric category names consistently:
 1. Task Completion
 2. Content and Delivery
 3. Organization and Structure
 4. Vocabulary and Expression
 5. Grammatical Accuracy
+
+For essay writing, judge whether ideas develop across sentences into a coherent paragraph or multi-paragraph response.
+Pay attention to paragraph structure, sentence-to-sentence reasoning, and how supporting details build the main point.
+When grades or graded category judgments are needed, use the same exact category names above.
 
 1. Task Completion
 - A: Successfully addresses the topic and fulfills requirements. Minor omissions are acceptable.

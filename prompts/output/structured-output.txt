@@ -9,6 +9,3 @@ When both evaluation and feedback are enabled for the same scope, merge them int
 If `categories[].exampleCase` is present, it must directly demonstrate and justify that exact category comment.
 
 {{active_sections_summary}}
-
-Set meta.generatedAt to the current ISO timestamp.
-Set meta.promptFiles to the list of prompt files used for this request.

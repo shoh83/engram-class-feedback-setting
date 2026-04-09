@@ -2,6 +2,10 @@ import { z } from "zod";
 
 import type { FeedbackConfigState } from "@/types/app";
 
+interface SchemaOptions {
+  includeServerMeta?: boolean;
+}
+
 const studentLevelSchema = z.object({
   schoolStage: z.enum(["elementary", "middle", "high"]),
   proficiency: z.enum(["low", "middle", "high"])
@@ -71,14 +75,23 @@ function reviewSchema(config: FeedbackConfigState) {
   return z.object(shape);
 }
 
-export function buildFeedbackResponseSchema(config: FeedbackConfigState) {
+export function buildFeedbackResponseSchema(
+  config: FeedbackConfigState,
+  options: SchemaOptions = {}
+) {
+  const { includeServerMeta = true } = options;
+
   const shape: Record<string, z.ZodTypeAny> = {
     meta: z.object({
       outputLanguage: z.enum(["korean", "english"]),
       assignmentType: z.enum(["essay", "descriptive-answer"]),
       studentLevel: studentLevelSchema,
-      generatedAt: z.string(),
-      promptFiles: z.array(z.string())
+      ...(includeServerMeta
+        ? {
+            generatedAt: z.string(),
+            promptFiles: z.array(z.string())
+          }
+        : {})
     }),
     improvements: z.object({
       detailedItems: z.array(
@@ -180,8 +193,11 @@ function unwrapSchema(schema: z.ZodTypeAny): Record<string, unknown> {
   throw new Error("Unsupported schema node while building JSON schema.");
 }
 
-export function buildFeedbackResponseJsonSchema(config: FeedbackConfigState) {
-  const schema = buildFeedbackResponseSchema(config);
+export function buildFeedbackResponseJsonSchema(
+  config: FeedbackConfigState,
+  options: SchemaOptions = {}
+) {
+  const schema = buildFeedbackResponseSchema(config, options);
 
   return {
     name: "writing_feedback_response",

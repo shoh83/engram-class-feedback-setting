@@ -1,4 +1,4 @@
-Include category-specific feedback for each rubric category that is relevant to the selected configuration.
+Include category-specific feedback for each enabled rubric category using these exact category names: Task Completion, Content and Delivery, Organization and Structure, Vocabulary and Expression, and Grammatical Accuracy.
 Each category feedback item should be short but actionable.
 If category evaluation is also enabled, the category `comment` must function as a single combined card:
 - first, make the judgment clear

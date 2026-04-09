@@ -12,8 +12,9 @@ export async function POST(request: Request) {
   try {
     const body = (await request.json()) as GenerateRequest;
     const promptPreview = await composePrompt(body.config, body.inputs);
+    const modelResponseSchema = buildFeedbackResponseSchema(body.config, { includeServerMeta: false });
     const responseSchema = buildFeedbackResponseSchema(body.config);
-    const responseJsonSchema = buildFeedbackResponseJsonSchema(body.config);
+    const responseJsonSchema = buildFeedbackResponseJsonSchema(body.config, { includeServerMeta: false });
     const model = getModelName();
 
     if (!process.env.OPENAI_API_KEY) {
@@ -87,7 +88,21 @@ export async function POST(request: Request) {
         ? response.output_text
         : JSON.stringify(response.output ?? []);
 
-    const parsed = responseSchema.parse(JSON.parse(outputText)) as FeedbackResponse;
+    const modelParsed = modelResponseSchema.parse(JSON.parse(outputText)) as Omit<
+      FeedbackResponse,
+      "meta"
+    > & {
+      meta: Omit<FeedbackResponse["meta"], "generatedAt" | "promptFiles">;
+    };
+
+    const parsed = responseSchema.parse({
+      ...modelParsed,
+      meta: {
+        ...modelParsed.meta,
+        generatedAt: new Date().toISOString(),
+        promptFiles: promptPreview.usedFiles
+      }
+    }) as FeedbackResponse;
 
     const result: GenerateResponse = {
       promptPreview,

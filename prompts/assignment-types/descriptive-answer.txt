@@ -1,20 +1,14 @@
 Use a short-answer or constructed-response rubric.
-Evaluate the writing with these categories:
-1. Task completion
-2. Content and delivery
-3. Organization and structure
-4. Vocabulary and expression
-5. Grammar accuracy
-
-For descriptive answers, focus less on full paragraph development and more on sentence composition, sentence-level clarity, and within-paragraph structure.
-Judge whether the response directly answers the task with sufficient support in a concise form.
-
-When grades or graded category judgments are needed, use this rubric and map it to these exact category names:
+Use these exact rubric category names consistently:
 1. Task Completion
 2. Content and Delivery
 3. Organization and Structure
 4. Vocabulary and Expression
 5. Grammatical Accuracy
+
+For descriptive answers, focus less on full paragraph development and more on sentence composition, sentence-level clarity, and within-paragraph structure.
+Judge whether the response directly answers the task with sufficient support in a concise form.
+When grades or graded category judgments are needed, use the same exact category names above.
 
 1. Task Completion
 - A: Directly answers the question and fulfills all required parts. Minor omissions are acceptable.

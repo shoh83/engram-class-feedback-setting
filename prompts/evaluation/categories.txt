@@ -1,4 +1,4 @@
-Include category-by-category evaluations for task completion, content/delivery, organization/structure, vocabulary/expression, and grammatical accuracy.
+Include category-by-category evaluations for these exact rubric categories: Task Completion, Content and Delivery, Organization and Structure, Vocabulary and Expression, and Grammatical Accuracy.
 Each category summary should explain the judgment in plain language.
 If category feedback is also enabled, do not treat evaluation and feedback as separate category entries.
 For each category, write one unified `comment` that includes both the evaluative judgment and the practical guidance.
