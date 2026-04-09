@@ -111,6 +111,19 @@ export function ConfigForm({ config, onChange }: ConfigFormProps) {
             <option value="descriptive-answer">Descriptive answer</option>
           </select>
         </div>
+        <div className="field">
+          <label htmlFor="reasoningEffort">Reasoning effort</label>
+          <select
+            id="reasoningEffort"
+            className="control"
+            value={config.reasoningEffort}
+            onChange={(event) => update("reasoningEffort", event.target.value as FeedbackConfigState["reasoningEffort"])}
+          >
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+          </select>
+        </div>
       </div>
 
       {config.assignmentType === "descriptive-answer" ? (

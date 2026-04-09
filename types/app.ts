@@ -2,6 +2,7 @@ export type SchoolStage = "elementary" | "middle" | "high";
 export type Proficiency = "low" | "middle" | "high";
 export type OutputLanguage = "korean" | "english";
 export type AssignmentType = "essay" | "descriptive-answer";
+export type ReasoningEffort = "low" | "medium" | "high";
 export type GradeLetter = "A" | "B" | "C" | "D" | "E";
 export type FeedbackCategory =
   | "taskCompletion"
@@ -37,6 +38,7 @@ export interface FeedbackConfigState {
   studentLevel: StudentLevel;
   outputLanguage: OutputLanguage;
   assignmentType: AssignmentType;
+  reasoningEffort: ReasoningEffort;
   scoring: ScoringConfig;
   evaluation: EvaluationConfig;
   feedback: FeedbackConfig;

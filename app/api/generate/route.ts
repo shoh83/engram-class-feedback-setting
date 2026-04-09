@@ -42,7 +42,7 @@ export async function POST(request: Request) {
     const response = await client.responses.create({
       model,
       reasoning: {
-        effort: "medium"
+        effort: body.config.reasoningEffort
       },
       input: [
         {

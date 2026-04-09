@@ -7,6 +7,7 @@ export const defaultConfig: FeedbackConfigState = {
   },
   outputLanguage: "korean",
   assignmentType: "essay",
+  reasoningEffort: "medium",
   scoring: {
     enabled: false,
     allowPartialCredit: false

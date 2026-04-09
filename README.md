@@ -1,6 +1,6 @@
 # EFL Writing Feedback Demo
 
-Local-only Next.js demo for configuring Korean EFL writing feedback options, composing a modular prompt from prompt-fragment files, calling `gpt-5.4` with `reasoning.effort = "medium"`, and rendering editable structured-output cards.
+Local-only Next.js demo for configuring Korean EFL writing feedback options, composing a modular prompt from prompt-fragment files, calling `gpt-5.4` with a selectable `reasoning.effort`, and rendering editable structured-output cards.
 
 ## Features
 
@@ -13,6 +13,7 @@ Local-only Next.js demo for configuring Korean EFL writing feedback options, com
 - Structured JSON output validated with `zod`
 - Editable output cards after generation
 - Prompt preview and prompt fragment editor in the UI
+- Selectable reasoning effort for live model calls
 - Processing time and token usage display
 - Mock fallback when `OPENAI_API_KEY` is not present
 
